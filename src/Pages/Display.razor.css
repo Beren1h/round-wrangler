@@ -1,6 +1,9 @@
 .not-active {
     color: #494646;
 }
+.hide {
+    display: none;
+}
 
 .panel {
     display: flex;
