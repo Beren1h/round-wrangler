@@ -86,6 +86,11 @@ namespace wrangler.handlers
 
         public void AddCombatant(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
             Initiative.Combatants.Add(new Combatant {
                 Name = name,
                 IsActive = true
