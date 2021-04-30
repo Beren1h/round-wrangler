@@ -1,0 +1,30 @@
+@page "/initiative"
+
+@using wrangler.handlers
+@inject Memory _memory
+
+<div class="panel">
+    <div class="pane">
+        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken)){
+            <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")">
+                <div>
+                    @combatant.Name
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        _memory.OnChange += Update;
+    }
+
+    private void Update()
+    {
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    }
+}

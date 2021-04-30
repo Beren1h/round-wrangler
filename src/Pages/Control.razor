@@ -1,0 +1,43 @@
+@page "/control"
+
+@using wrangler.handlers
+@inject Memory _memory
+
+
+<div class="panel">
+    <div class="panel-right">
+        <h3 class="button green" @onclick="_memory.NextRound">@(_memory.Initiative.Round == 0 ? "Start" : "Next")</h3>
+        <h3 class="button red" @onclick="_memory.EndCombat">End</h3>
+        <input @bind="Combatant" @onkeyup="@Enter" />
+    </div>
+    <div class="panel-left">
+        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken)){
+            <div class="listor">
+                <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")" @onclick="() => _memory.SetTurn(combatant.Name)">
+                    @combatant.Name
+                </div>
+                <div class="remove" @onclick="() => _memory.RemoveCombatant(combatant.Name)">
+                    <div class="x">x</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string Combatant { get; set; }
+
+    public void Enter (KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            _memory.AddCombatant(Combatant);
+            Combatant = string.Empty;
+        }
+    }
+    private void AddCombatant()
+    {
+        _memory.AddCombatant(Combatant);
+        Combatant = string.Empty;
+    }
+}

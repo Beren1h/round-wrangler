@@ -1,0 +1,23 @@
+.not-active {
+    color: #494646;
+}
+
+.panel {
+    display: flex;
+    flex-direction: row;
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.combatant {
+    background-color: #1B1A1A;
+    border: 3px solid #302e2e;
+    margin: 4px;
+    border-radius: 25px;
+    padding: 5px 10px 5px 10px;
+    text-align: center;
+}
