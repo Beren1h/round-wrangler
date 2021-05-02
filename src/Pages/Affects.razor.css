@@ -4,6 +4,10 @@
     padding: 5px 5px 5px 0;
 }
 
+.assignment {
+    border: 3px solid cornflowerblue;
+}
+
 .form .control {
     display: flex;
     flex-direction: row;

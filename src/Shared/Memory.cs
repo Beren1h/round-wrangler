@@ -65,6 +65,7 @@ namespace wrangler.handlers
 
             foreach(var combatant in Initiative.Combatants.Where(c => c.IsActive))
             {
+                combatant.IsTurn = false;
                 combatant.TurnTaken = false;
             }
 
@@ -115,10 +116,23 @@ namespace wrangler.handlers
                 return;
             }
 
-            foreach(var combatant in Initiative.Combatants.Where(c => c.Name == Initiative.Turn || c.Name == name))
+            var current = Initiative.Combatants.FirstOrDefault(c => c.Name == Initiative.Turn);
+            var incoming = Initiative.Combatants.FirstOrDefault(c => c.Name == name);
+
+            var assignment = Affects.FirstOrDefault(a => a.AssignmentMode);
+            
+            if (assignment != null)
             {
-                combatant.TurnTaken = true;
+                //Initiative.Combatants.FirstOrDefault(c => c.Name == name).Affects.Add(assignment);
+                incoming.Affects.Add(assignment);
+                Notify();
+                return;
             }
+
+            //foreach(var combatant in Initiative.Combatants.Where(c => c.Name == Initiative.Turn))
+            // {
+            //     combatant.TurnTaken = true;
+            // }
 
             var list = Affects.Select(a => a).ToList();
 
@@ -141,14 +155,24 @@ namespace wrangler.handlers
 
             Affects = list;
 
-            Initiative.Turn = name;
+            //Initiative.Turn = name;
 
-            var combatant2 = Initiative.Combatants.FirstOrDefault(c => c.Name == name);
+            //var combatant2 = Initiative.Combatants.FirstOrDefault(c => c.Name == name);
 
-            foreach (var affect in combatant2.Affects)
+            foreach (var affect in incoming.Affects)
             {
                 TurnAffects += affect.Description;
             }
+
+            incoming.IsTurn = true;
+
+            if(current != null)
+            {
+                current.TurnTaken = true;
+                current.IsTurn = false;
+            }
+
+            Initiative.Turn = name;
 
             Notify();
         }
@@ -156,7 +180,11 @@ namespace wrangler.handlers
         public void RemoveCombatant(string name)
         {
             //Console.WriteLine("name");
-            Initiative.Combatants.FirstOrDefault(c => c.Name == name).IsActive = false;
+            var match = Initiative.Combatants.FirstOrDefault(c => c.Name == name);
+
+            //Initiative.Combatants.FirstOrDefault(c => c.Name == name).IsActive = false;
+
+            match.IsActive = !match.IsActive;
 
             Notify();
         }
@@ -207,7 +235,25 @@ namespace wrangler.handlers
             Affects.Add(effect);
             Notify();
         }
+        public void ToggleAssignment(Affect affect)
+        {
+            //Console.WriteLine($"toggle: {affect.Description}");
 
+            var match = Affects.FirstOrDefault(a => a == affect);
+
+            foreach(var other in Affects.Where(a => a.Id != affect.Id))
+            {
+                other.AssignmentMode = false;
+                //Console.WriteLine($"toggle: {other.Description} {other.AssignmentMode}");
+            }
+
+            if (match != null)
+            {
+                match.AssignmentMode = !match.AssignmentMode;
+            }
+
+            Notify();
+        }
         public void ApplyAffect(Combatant combatant)
         {
             //var combatant = Initiative.Combatants.FirstOrDefault(c => c.Name == name);

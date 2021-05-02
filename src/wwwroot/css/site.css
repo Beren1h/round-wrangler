@@ -19,6 +19,15 @@
     padding: 5px;
 }
 
+.panel-third {
+    display: flex;
+    flex-direction: column;
+}
+
+.weak {
+    opacity: 0.25;
+}
+
 .listor {
     display: flex;
     flex-direction: row;
@@ -30,14 +39,14 @@
 }
 
 .concentration {
-    border: 3px solid gold;
+    border: 3px solid gold !important;
 }
 
 .listor .combatant {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    min-width: 100px;
+    /* min-width: 100px; */
     margin: 0px 7px 0px 0px;
     padding: 5px 5px 5px 10px;
     cursor: pointer;

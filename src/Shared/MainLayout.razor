@@ -2,6 +2,7 @@
 
 @using wrangler.handlers
 @inject Memory _memory
+@inject NavigationManager _nav
 
 <div class="page">
     <div class="main">
@@ -12,10 +13,28 @@
             }
             @if (!string.IsNullOrEmpty(_memory.Initiative.Turn))
             {
-                <h2>@_memory.Initiative.Turn</h2>
+                                    @* @foreach (var affect in combatant.Affects)
+                    {
+                        <div class="listor">
+                            <div class="combatant">@affect.Description</div>
+                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, combatant)">
+                                <div class="x">x</div>
+                            </div>
+                        </div>
+                    }   *@
+                <h2 class="@GetClass(_memory.Initiative.Turn)" @onclick="() => _memory.SetTurn(_memory.Initiative.Turn)">@_memory.Initiative.Turn</h2>
                 foreach(var affect in _memory.Initiative.Combatants.FirstOrDefault(c => c.Name == _memory.Initiative.Turn).Affects)
                 {
-                    <h5 class="turn-affect">@affect.Description</h5>
+                    <div class="listor">
+                        <div class="combatant">@affect.Description</div>
+                        @if (_nav.Uri.Contains("control"))
+                        {
+                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, _memory.Initiative.Combatants.FirstOrDefault(c => c.Name == _memory.Initiative.Turn))">
+                                <div class="x">x</div>
+                            </div>
+                        }
+                    </div>                    
+                    @* <h5 class="turn-affect">@affect.Description</h5> *@
                 }
             }
         </div>
@@ -30,6 +49,21 @@
     protected override void OnInitialized()
     {
         _memory.OnChange += Update;
+    }
+
+    private String GetClass(string name)
+    {
+        var css = string.Empty;
+
+        foreach(var affect in _memory.Affects)
+        {
+            if (affect.MetaData.ContainsKey("concentration") && affect.MetaData["concentration"] == name)
+            {
+                css += "concentration";
+            }
+        }
+        
+        return css;
     }
 
     private void Update()

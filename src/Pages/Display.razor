@@ -1,6 +1,7 @@
 @page "/initiative"
 
 @using wrangler.handlers
+@using wrangler.models
 @inject Memory _memory
 
 @if(_memory.Initiative.Round == 0)
@@ -15,9 +16,10 @@
 else
 {
     <div class="panel">
-        <div class="pane">
-            @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken)){
-                <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")">
+        <div class="panel-left">
+            @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken && !c.IsTurn)){
+                <div class="@FindClass(combatant)">
+                @* <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")"> *@
                     <div>
                         @combatant.Name
                     </div>
@@ -30,6 +32,22 @@ else
                 </div>
             }
         </div>
+        <div class="panel-right weak">
+            @foreach(var combatant in _memory.Initiative.Combatants.Where(c => c.TurnTaken && !c.IsTurn)){
+                <div class="@FindClass(combatant)">
+                @* <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")"> *@
+                    <div>
+                        @combatant.Name
+                    </div>
+                    <div>
+                        @foreach (var affect in combatant.Affects)
+                        {
+                            <div class="combatant">@affect.Description</div>
+                        }                         
+                    </div>
+                </div>
+            }            
+        </div>
     </div>
 }
 
@@ -38,6 +56,31 @@ else
     protected override void OnInitialized()
     {
         _memory.OnChange += Update;
+    }
+
+    private string FindClass(Combatant combatant)
+    {
+        var css = "combatant";
+
+        if (!combatant.IsActive)
+        {
+            css += " not-active";
+        }
+
+        if (combatant.IsActive)
+        {
+            var affect = _memory.Affects.FirstOrDefault(a => a.Expiration.Turn == combatant.Name);
+            //Console.WriteLine(affect == null);
+
+            if (affect != null && 
+                affect.MetaData.ContainsKey("concentration") && 
+                affect.MetaData["concentration"] == combatant.Name)
+                {
+                    css += " concentration";
+                }
+        }
+
+        return css;
     }
 
     private void Update()

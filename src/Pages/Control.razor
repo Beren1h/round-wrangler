@@ -13,7 +13,7 @@
     </div>
     <div class="panel-left">
         <div class="">
-        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken)){
+        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken && !c.IsTurn)){
             <div class="lcars"
                 ondragover="event.preventDefault();"
                 ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -24,19 +24,6 @@
                 <div class="@IsConcentration(combatant)">
                     <div class="@DetermineClass(combatant)" @onclick="() => _memory.SetTurn(combatant.Name)">
                         @combatant.Name
-                        @* <div
-                            ondragover="event.preventDefault();"
-                            ondragstart="event.dataTransfer.setData('', event.target.id);"
-                            @ondrop="() => HandleDrop(combatant)"
-                            @ondragenter="HandleDragEnter"
-                            @ondragleave="HandleDragLeave"
-                        >@combatant.Name</div> *@
-                        @* <div class="listor">
-                            <div class="combatant">sadasd</div>
-                            <div class="remove">
-                                <div class="x">x</div>
-                            </div>
-                        </div> *@
                     </div>
                     @foreach (var affect in combatant.Affects)
                     {
@@ -55,10 +42,27 @@
         }
         </div>
     </div>
-    @* <div 
-        style="border: 1px solid green; height: 200px; width: 200px;" 
-        class="dropzone"
-    ></div> *@
+    <div class="panel-third weak">
+            @foreach(var combatant in _memory.Initiative.Combatants.Where(c => c.TurnTaken && !c.IsTurn)){
+                <div class="@IsConcentration(combatant)">
+                    <div class="@DetermineClass(combatant)" @onclick="() => _memory.SetTurn(combatant.Name)">
+                        @combatant.Name
+                    </div>
+                    @foreach (var affect in combatant.Affects)
+                    {
+                        <div class="listor">
+                            <div class="combatant">@affect.Description</div>
+                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, combatant)">
+                                <div class="x">x</div>
+                            </div>
+                        </div>
+                    }                
+                    <div class="remove" @onclick="() => _memory.RemoveCombatant(combatant.Name)">
+                        <div class="x">x</div>
+                    </div>
+                </div>
+            }         
+    </div>
 </div>
 
 @code {

@@ -42,7 +42,10 @@
 <div class="panel">
     <div class="panel-left">
         @foreach(var affect in _memory.Affects){
-            <div class="listor" draggable="true" @ondragstart="() => HandleDragStart(affect)">
+            <div class="@HandleMode(affect)" draggable="true" 
+                @ondragstart="() => HandleDragStart(affect)"
+                @onclick="() => _memory.ToggleAssignment(affect)"
+            >
                 <div class="combatant">
                     @affect.Description
                 </div>
@@ -57,6 +60,19 @@
 
 @code {
     AffectSubmit submit = new AffectSubmit();
+
+    private string HandleMode(Affect affect)
+    {
+        Console.WriteLine($"{affect.Description}: {affect.AssignmentMode}");
+        var css = "listor";
+
+        if (affect.AssignmentMode)
+        {
+            css += " assignment";
+        }
+
+        return css;
+    }
 
     private void HandleDragStart(Affect affect)
     {

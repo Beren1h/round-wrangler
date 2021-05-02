@@ -17,6 +17,7 @@ namespace wrangler.models
 
         public string Id { get; set; }
         public string Description { get; set; }
+        public bool AssignmentMode { get; set; }
         public Expiration Expiration { get; set; }
         public Dictionary<string, string> MetaData { get; set; }
     }
