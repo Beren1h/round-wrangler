@@ -8,11 +8,15 @@
         <div class="top-row">
             @if (_memory.Initiative.Round != 0)
             {
-                <h5>Round @_memory.Initiative.Round</h5>
+                <h3>Round @_memory.Initiative.Round</h3>
             }
             @if (!string.IsNullOrEmpty(_memory.Initiative.Turn))
             {
                 <h2>@_memory.Initiative.Turn</h2>
+                foreach(var affect in _memory.Initiative.Combatants.FirstOrDefault(c => c.Name == _memory.Initiative.Turn).Affects)
+                {
+                    <h5 class="turn-affect">@affect.Description</h5>
+                }
             }
         </div>
         <div>

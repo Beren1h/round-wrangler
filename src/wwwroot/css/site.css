@@ -1,5 +1,80 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.not-active {
+    color: #494646;
+} 
+
+.panel {
+    display: flex;
+    flex-direction: row;
+}
+
+.panel-right {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.panel-left {
+    padding: 5px;
+}
+
+.listor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #1B1A1A;
+    border: 3px solid #302e2e;
+    margin: 4px;
+    border-radius: 25px;
+}
+
+.concentration {
+    border: 3px solid gold;
+}
+
+.listor .combatant {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 100px;
+    margin: 0px 7px 0px 0px;
+    padding: 5px 5px 5px 10px;
+    cursor: pointer;
+}
+
+.listor .remove {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 7px;
+}
+
+.x {
+	width: 20px;
+	height: 20px;
+    font-family: 'Arial';
+    font-weight: bold;
+    color: #494646;
+	border: 2px solid #494646;
+	background-color: black;
+	border-radius: 50%;
+    text-align: center;
+    line-height: 15px;
+}
+
+.x:hover { cursor: pointer; }
+
+
+
+
+
+
+
+
+
+
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

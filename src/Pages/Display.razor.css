@@ -5,11 +5,6 @@
     display: none;
 }
 
-.panel {
-    display: flex;
-    flex-direction: row;
-}
-
 .pane {
     display: flex;
     flex-direction: column;

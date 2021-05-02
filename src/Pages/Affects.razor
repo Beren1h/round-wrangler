@@ -1,0 +1,96 @@
+@page "/affects"
+
+@using models
+@using handlers
+@inject Memory _memory
+
+<div class="form">
+<EditForm Model=@submit OnSubmit=@OnSubmit>
+    <div class="control">
+        <div>Name</div>
+        <InputText @bind-Value=@submit.Description />
+    </div>
+    <div class="control">
+        <div>Expiration Round</div>
+        <InputNumber @bind-Value=@submit.Expiration.Round />
+    </div>  
+    <div class="control">
+        <div>Expiration Turn</div>
+        <InputSelect @bind-Value=@submit.Expiration.Turn>
+            <option value="">select combatant</option>
+            @foreach(var combatant in _memory.Initiative.Combatants)
+            {
+                <option value=@combatant.Name>@combatant.Name</option>
+            }
+        </InputSelect>
+    </div> 
+    <div class="control">
+        <div>Expiration Pointer</div>
+        <InputSelect @bind-Value=@submit.Expiration.Pointer>
+            <option value=@resources.Affects.Pointers.START>@resources.Affects.Pointers.START</option>
+            <option value=@resources.Affects.Pointers.END>@resources.Affects.Pointers.END</option>
+        </InputSelect>
+    </div>  
+    <div class="control">
+        <div>Concentration</div>
+        <InputCheckbox @bind-Value=@submit.IsConcentration />
+    </div>  
+    <input type="submit" value="submit" />
+</EditForm>
+</div>
+
+<div class="panel">
+    <div class="panel-left">
+        @foreach(var affect in _memory.Affects){
+            <div class="listor" draggable="true" @ondragstart="() => HandleDragStart(affect)">
+                <div class="combatant">
+                    @affect.Description
+                </div>
+                <div class="remove" @onclick="() => _memory.RemoveAffect(affect)">
+                    <div class="x">x</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    AffectSubmit submit = new AffectSubmit();
+
+    private void HandleDragStart(Affect affect)
+    {
+        _memory.SelectedAffect = affect;
+        Console.WriteLine($"start: {_memory.SelectedAffect.Id}{_memory.SelectedAffect.Description}");
+    }
+
+    private void OnSubmit()
+    {
+        @* Console.WriteLine($"submit: {submit.Description}");
+        Console.WriteLine($"expiratoin round: {submit.Expiration.Round}");
+        Console.WriteLine($"expiratoin turn: {submit.Expiration.Turn}");
+        Console.WriteLine($"expiratoin pointer: {submit.Expiration.Pointer}");
+        Console.WriteLine($"expiratoin concentration: {submit.IsConcentration}"); *@
+
+        _memory.AddAffect(submit);
+
+        submit = new AffectSubmit();
+    }
+
+    protected override void OnInitialized()
+    {
+        _memory.OnChange += Update;
+    }
+
+    private void Update()
+    {
+        if (string.IsNullOrEmpty(submit.Expiration.Pointer))
+        {
+            submit.Expiration.Pointer = resources.Affects.Pointers.START;
+        }
+
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    }    
+}

@@ -7,6 +7,19 @@
     margin: 10px 0px 0px 0px;  
 }
 
+.turn-affect {
+    margin: 0 0 0 5px;
+    padding: 3px;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    background-color: #1B1A1A;
+    border: 3px solid #302e2e;
+    color:cadetblue;
+    /* margin: 4px; */
+    border-radius: 25px;
+}
+
 .main {
     flex: 1;
 }
