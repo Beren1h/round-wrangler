@@ -21,6 +21,12 @@ else
                     <div>
                         @combatant.Name
                     </div>
+                    <div>
+                        @foreach (var affect in combatant.Affects)
+                        {
+                            <div class="combatant">@affect.Description</div>
+                        }                         
+                    </div>
                 </div>
             }
         </div>

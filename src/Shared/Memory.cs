@@ -219,7 +219,7 @@ namespace wrangler.handlers
 
         public void RemoveAffect(Affect affect, Combatant combatant)
         {
-            Console.WriteLine($"remove affect: {affect.Description}");
+            //Console.WriteLine($"remove affect: {affect.Description}");
             //var affect = Affects.FirstOrDefault(a => a.Id == id);
             Initiative.Combatants.FirstOrDefault(c => c.Name == combatant.Name).Affects.Remove(affect);
             Notify();
