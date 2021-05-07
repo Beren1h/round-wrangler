@@ -7,21 +7,25 @@
 <div class="page">
     <div class="main">
         <div class="top-row">
-            @if (_memory.Initiative.Round != 0)
+            @if(_nav.Uri.Contains("control"))
             {
-                <h3>Round @_memory.Initiative.Round</h3>
+                <div class="listor">
+                    <div class="combatant" @onclick="_memory.NextRound">Round @_memory.Initiative.Round</div>
+                    <div class="remove" @onclick="_memory.EndCombat">
+                        <div class="x">x</div>
+                    </div>
+                </div>
             }
+            else
+            {
+                @if(_memory.Initiative.Round != 0)
+                {
+                    <h3>Round @_memory.Initiative.Round</h3>    
+                }
+            }
+
             @if (!string.IsNullOrEmpty(_memory.Initiative.Turn))
             {
-                                    @* @foreach (var affect in combatant.Affects)
-                    {
-                        <div class="listor">
-                            <div class="combatant">@affect.Description</div>
-                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, combatant)">
-                                <div class="x">x</div>
-                            </div>
-                        </div>
-                    }   *@
                 <h2 class="@GetClass(_memory.Initiative.Turn)" @onclick="() => _memory.SetTurn(_memory.Initiative.Turn)">@_memory.Initiative.Turn</h2>
                 foreach(var affect in _memory.Initiative.Combatants.FirstOrDefault(c => c.Name == _memory.Initiative.Turn).Affects)
                 {
@@ -34,7 +38,6 @@
                             </div>
                         }
                     </div>                    
-                    @* <h5 class="turn-affect">@affect.Description</h5> *@
                 }
             }
         </div>

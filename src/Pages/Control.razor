@@ -6,9 +6,12 @@
 
 <div class="panel">
     <div class="panel-right">
-        <h3 class="button green" @onclick="_memory.NextRound">@(_memory.Initiative.Round == 0 ? "Start" : "Next")</h3>
-        <h3 class="button red" @onclick="_memory.EndCombat">End</h3>
-        <input @bind="Combatant" @onkeyup="@Enter" />
+        <div class="affect">
+            <div class="control">
+                <div class="label absolute">add</div>
+                <div><input type="text" @bind="Combatant" @onkeyup="@Enter" /></div>
+            </div>
+        </div>        
         <Affects />
     </div>
     <div class="panel-left">

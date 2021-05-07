@@ -1,3 +1,72 @@
 @page "/"
 
-<h1>Hello, world!</h1>
+@using models
+@using handlers
+@inject Memory _memory
+
+<div class="affect">
+    <div class="control">
+        <div id="two" class="label absolute">name</div>
+        <div><input id="one" tabindex="1" type="text" @ref="start" /></div>
+    </div>
+    <div class="control">
+        <div class="label absolute">expiration round</div>
+        <div><input type="number" /></div>
+    </div>    
+    <div class="control">
+        <div class="label absolute">expiration turn</div>
+        <div>
+            <select>
+                <option>option1</option>
+                <option>option2</option>
+                <option>option3</option>
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <div class="label absolute">expiration pointer</div>
+        <div>
+            <select>
+                <option>start</option>
+                <option>end</option>
+            </select>
+        </div>
+    </div>    
+    <div class="control row">
+        <div class="label">concentration</div>
+        <div>
+            <input type="checkbox" checked="@submit.IsConcentration" />
+        </div>
+        <div>
+            <button class="go" @onclick="OnSubmit">Go</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@code {
+    AffectSubmit submit = new AffectSubmit{
+        IsConcentration = false
+    };
+
+    private void OnSubmit(){
+        Console.WriteLine("submit");
+    }
+
+    private ElementReference start;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await start.FocusAsync();
+        }
+   }    
+}

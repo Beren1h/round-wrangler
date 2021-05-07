@@ -231,13 +231,13 @@ namespace wrangler.handlers
             {
                 effect.MetaData.Add("concentration", submit.Expiration.Turn);
             }
-
+            
             Affects.Add(effect);
             Notify();
         }
         public void ToggleAssignment(Affect affect)
         {
-            //Console.WriteLine($"toggle: {affect.Description}");
+            Console.WriteLine($"toggle: {affect.Description}");
 
             var match = Affects.FirstOrDefault(a => a == affect);
 

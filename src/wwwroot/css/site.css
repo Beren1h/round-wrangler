@@ -74,6 +74,100 @@
 
 .x:hover { cursor: pointer; }
 
+.affect {
+    display: flex;
+    flex-direction: column;
+}
+
+.affect .control {
+    margin: 15px 0 15px 0;
+}
+
+.affect .control .label {
+    font-size: 16px;
+    color: #333333  ;
+    background-color: black;
+    font-family: Arial;
+    padding: 0px;
+    margin: -10px 0 0 0;
+}
+
+.affect .control input[type="text"], input[type="number"], select {
+    border: none;
+    /* width: 200px; */
+    width: 100%;
+    color: chartreuse;
+    background-color: black;
+    border-bottom: 2px solid #333333;
+    padding: 10px 0 2px 0;
+    font-size: 18px;
+}
+
+.affect .control input[type="text"], input[type="number"] {
+    color: transparent;
+    text-shadow: 0px 0px 1px chartreuse;
+}
+
+.affect .control input[type="checkbox"] {
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.2s;
+    background-color: #222222;
+    width : 25px;
+    height: 25px;
+    margin: 0 0 0 10px;
+}
+
+.affect .control input[type="checkbox"]:focus {
+    outline: none;
+    border: 2px solid chartreuse;
+}
+
+.affect .control input[type="checkbox"]:checked {
+    appearance: none;
+    background: radial-gradient(closest-side, chartreuse, black);
+    width : 25px;
+    height: 25px;
+}
+
+.affect .control input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    outline: none;
+    border-bottom: 2px solid chartreuse;
+}
+
+.affect .control .absolute {
+    position: absolute;
+}
+
+.affect .control.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px 0 0 0;
+}
+
+.go {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color: #222222;
+    color: #8dce8a;
+    transition: 0.2s;
+    width: 75px;
+    height: 25px;
+    border-radius: 5px;
+    margin: 0 0 5px 10px;
+}
+
+.go:focus, .go:hover  {
+    background-color: orange;
+    color: black;
+    font-weight: bold;
+}
+
+
 
 
 

@@ -10,9 +10,9 @@
 .button {
     background-color: #1B1A1A;
     padding: 3px 10px 5px 10px;
-    border-radius: 25px;
     text-align: center;
     cursor: pointer;
+    margin: 0 0 0 0;
 }
 
 .button.green {
@@ -24,4 +24,5 @@
     color: red;
     background-color: darkred;
     border: 3px solid red;
+    margin: 0 0 20px 0;
 }
