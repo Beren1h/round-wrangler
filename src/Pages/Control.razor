@@ -1,143 +1,63 @@
 @page "/control"
 
-@using wrangler.models
+@using wrangler.data
 @using wrangler.handlers
-@inject Memory _memory
 
-<div class="panel">
-    <div class="panel-right">
-        <div class="affect">
-            <div class="control">
-                <div class="label absolute">add</div>
-                <div><input type="text" @bind="Combatant" @onkeyup="@Enter" /></div>
-            </div>
-        </div>        
-        <Affects />
-    </div>
-    <div class="panel-left">
-        <div class="">
-        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken && !c.IsTurn)){
-            <div class="lcars"
-                ondragover="event.preventDefault();"
-                ondragstart="event.dataTransfer.setData('', event.target.id);"
-                @ondrop="() => HandleDrop(combatant)"
-                @ondragenter="HandleDragEnter"
-                @ondragleave="HandleDragLeave"            
-            >
-                <div class="@IsConcentration(combatant)">
-                    <div class="@DetermineClass(combatant)" @onclick="() => _memory.SetTurn(combatant.Name)">
-                        @combatant.Name
-                    </div>
-                    @foreach (var affect in combatant.Affects)
-                    {
-                        <div class="listor">
-                            <div class="combatant">@affect.Description</div>
-                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, combatant)">
-                                <div class="x">x</div>
-                            </div>
-                        </div>
-                    }                
-                    <div class="remove" @onclick="() => _memory.RemoveCombatant(combatant.Name)">
-                        <div class="x">x</div>
-                    </div>
-                </div>
-            </div>
-        }
+@inject MemoryBank _bank
+@inject CombatantHandler _combatant
+@inject ControlHandler _control
+@inject CombatHandler _combat
+@inject AffectHandler _affect
+
+<div class="frame">
+    <div class="header">
+        <div class="round">
+                <Widget 
+                    Text=@("Round " + _bank.Combat.Round.ToString())
+                    Theme="dark"
+                    BodyClick="()=>_combat.NextRound()"
+                    RemoveClick="()=>_combat.EndCombat()"
+                />             
         </div>
+        <div class="turn @_control.DetermineConcentrationCssClass()">@_bank.Combat.Turn</div>
     </div>
-    <div class="panel-third weak">
-            @foreach(var combatant in _memory.Initiative.Combatants.Where(c => c.TurnTaken && !c.IsTurn)){
-                <div class="@IsConcentration(combatant)">
-                    <div class="@DetermineClass(combatant)" @onclick="() => _memory.SetTurn(combatant.Name)">
-                        @combatant.Name
-                    </div>
-                    @foreach (var affect in combatant.Affects)
-                    {
-                        <div class="listor">
-                            <div class="combatant">@affect.Description</div>
-                            <div class="remove" @onclick="()=>_memory.RemoveAffect(affect, combatant)">
-                                <div class="x">x</div>
-                            </div>
-                        </div>
-                    }                
-                    <div class="remove" @onclick="() => _memory.RemoveCombatant(combatant.Name)">
-                        <div class="x">x</div>
-                    </div>
-                </div>
-            }         
+    <div class="panels">
+        <div class="list wide debug0">
+            <Forms />
+        </div>
+        <div class="list debug1">
+            @foreach(var combatant in _bank.Combatants)
+            {
+                <Widget 
+                    Text=@combatant.Name 
+                    Theme="dark"
+                    Nested="_control.GetAffectWidgets(combatant)"
+                    CssClass=@_control.DetermineCombatantWidgetCssClass(combatant)
+                    BodyClick="()=>_combat.SetTurn(combatant.Name)"
+                    RemoveClick="()=>_combatant.RemoveCombatant(combatant.Name)"
+                />    
+            }
+        </div>
+        <div class="list debug2">
+            @foreach(var affect in _bank.Affects)
+            {
+                <Widget 
+                    Text=@affect.Description
+                    Theme="red"
+                />                   
+            }
+        </div>
     </div>
 </div>
 
 @code {
 
-    private void HandleDrop(Combatant combatant)
-    {
-        _memory.ApplyAffect(combatant);
-        //Console.WriteLine($"drop: {combatant.Name}");
-    }
-
-    private void HandleDragEnter()
-    {
-        //Console.WriteLine("enter");
-    }
-
-    private void HandleDragLeave()
-    {
-        //Console.WriteLine("leave");
-    }
-
-    private string IsConcentration(Combatant combatant)
-    {
-        var css = "listor";
-
-        if (combatant.IsActive)
-        {
-            var affect = _memory.Affects.FirstOrDefault(a => a.Expiration.Turn == combatant.Name);
-            //Console.WriteLine(affect == null);
-
-            if (affect != null && 
-                affect.MetaData.ContainsKey("concentration") && 
-                affect.MetaData["concentration"] == combatant.Name)
-                {
-                    css += " concentration";
-                }
-        }
-
-        //Console.WriteLine($"{combatant.Name}: {combatant.IsActive} {css}");
-
-        return css;
-    }
-    private string DetermineClass(Combatant combatant)
-    {
-        var css = "combatant";
-
-        if (!combatant.IsActive)
-        {
-            css += " not-active";
-        }
-
-        return css;
-    }
-
-    private string Combatant { get; set; }
-
-    public void Enter (KeyboardEventArgs e)
-    {
-        if (e.Code == "Enter" || e.Code == "NumpadEnter")
-        {
-            _memory.AddCombatant(Combatant);
-            Combatant = string.Empty;
-        }
-    }
-    private void AddCombatant()
-    {
-        _memory.AddCombatant(Combatant);
-        Combatant = string.Empty;
-    }
 
     protected override void OnInitialized()
     {
-        _memory.OnChange += Update;
+        _combatant.OnChange += Update;
+        _combat.OnChange += Update;
+        _affect.OnChange += Update;
     }
 
     private void Update()
@@ -145,5 +65,18 @@
         InvokeAsync(() => {
             StateHasChanged();
         });
-    }    
+    } 
+
+
+
+
+
+
+    private string Add { get; set;} = "Willma";
+    public bool IsConcentration { get; set; }
+    private string msg = "asd";
+    private void Say(string message)
+    {
+        Console.WriteLine(message);
+    }
 }

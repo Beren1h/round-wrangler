@@ -1,0 +1,43 @@
+@page "/widget"
+@using models
+
+<div class="widget @Theme @CssClass">
+    <div class="widget-body" @onclick="() => InvokeClick(0)">
+        @Text
+        @foreach(var nest in Nested)
+        {
+            <Widget 
+                Text=@nest.Text
+                Theme=@nest.Theme
+                RemoveClick=@nest.RemoveClick
+            />
+        }
+    </div>
+    <div class="widget-remove" @onclick="() => InvokeClick(1)">
+        <div class="remove-x @Theme">x</div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Action BodyClick { get; set; }
+    [Parameter] public Action RemoveClick { get; set; }
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string CssClass { get; set; }
+    [Parameter] public string Theme { get; set; }
+    [Parameter] public List<WidgetProperties> Nested { get; set; } = new List<WidgetProperties>();
+    [Parameter] public Dictionary<string, string> MetaData { get; set; } = new Dictionary<string, string>();
+
+    private void InvokeClick(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                RemoveClick?.Invoke();
+            break;
+            default:
+                BodyClick?.Invoke();
+            break;
+            
+        }
+    }
+}

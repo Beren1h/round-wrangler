@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using wrangler.data;
+using wrangler.handlers;
 
 namespace wrangler
 {
@@ -29,7 +31,12 @@ namespace wrangler
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<wrangler.handlers.Memory>();
+            // services.AddSingleton<wrangler.handlers.Memory>();
+            services.AddSingleton<MemoryBank>();
+            services.AddSingleton<CombatantHandler>();
+            services.AddSingleton<ControlHandler>();
+            services.AddSingleton<CombatHandler>();
+            services.AddSingleton<AffectHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

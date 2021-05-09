@@ -1,0 +1,76 @@
+.forms {
+    display: flex;
+    flex-direction: column;
+}
+
+.control {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px 0 3px 0;
+    padding: 3px;
+    justify-content: flex-end;
+}
+
+.control label {
+    flex: 0 1 50%;
+    margin: 0 3px 0 0;
+}
+
+.control input, select {
+    flex: 1 0 50%;
+    border: none;
+    border-bottom: 2px solid #616161;
+    padding: 7px 3px 3px 0px;
+    background-color: transparent;
+    font-size: 20px;
+    color: #616161
+}
+
+.control select option {
+    background-color: #111111;
+}
+
+.control input:focus, select:focus {
+    outline: none;
+    border-bottom: 2px solid #64dd17;
+    color: #64dd17;
+}
+
+.control label {
+    margin: -12px 0 0 0;
+    position: absolute;
+    color: #616161
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    height: 27px;
+    background-color: #616161;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #222222;
+    width: 75px;
+}
+
+input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+}
+
+.control:focus-within label {
+    color: #64dd17
+  }
+
+button:focus, button:hover {
+    outline: none;
+    transition: 0.2s;
+    background-color: #64dd17;
+    color: #000000;
+}
+
+.control.button-line {
+    margin: 0;
+    justify-content: flex-end;
+}

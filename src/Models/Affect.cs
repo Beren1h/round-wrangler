@@ -4,7 +4,7 @@ namespace wrangler.models
 {
     public class AffectSubmit : Affect
     {
-        public bool IsConcentration { get; set; }
+        public string IsConcentration { get; set; }
     }
 
     public class Affect

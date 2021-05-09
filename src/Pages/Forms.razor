@@ -1,0 +1,72 @@
+@page "/forms"
+
+@using models
+@using wrangler.data
+@using wrangler.handlers
+
+@inject ControlHandler _control
+@inject AffectHandler _affect
+@inject MemoryBank _bank
+
+<div class="forms">
+
+    <div class="control">
+        <label class="label">add combatant</label>
+        <input type="text" @bind="_control.AddedCombatantName" @onkeyup="_control.OnEnter" @ref="Top" />
+    </div>
+
+    <div class="control">
+        <label class="label">description</label>
+        <input type="text" @bind="Submit.Description" />
+    </div>
+
+    <div class="control">
+        <label class="label">expiration round</label>
+        <input type="text" @bind="Submit.Expiration.Round" />
+    </div>
+
+    <div class="control">
+        <label class="label">expiration turn</label>
+        <select @bind="Submit.Expiration.Turn">
+            <option value="">---</option>
+            @foreach(var combatant in _bank.Combatants)
+            {
+                <option value="@combatant.Name">@combatant.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="control">
+        <label class="label">concentration ?</label>
+        <select @bind="Submit.MetaData[resources.Affects.MetaDataKeys.CONCENTRATION]">
+            <option value="false">no</option>
+            <option value="true">yes</option>
+        </select>
+    </div>
+
+    <div class="control">
+        <label class="label">expiration pointer</label>
+        <select @bind="Submit.Expiration.Pointer">
+            <option value="@resources.Affects.Pointers.END">@resources.Affects.Pointers.END</option>
+            <option value="@resources.Affects.Pointers.START">@resources.Affects.Pointers.START</option>
+        </select>
+    </div>
+
+    <div class="control button-line">
+        <button @onclick="AddAffect">Go</button>
+    </div>
+
+</div>
+
+@code {
+    AffectSubmit Submit = new AffectSubmit();
+
+    private ElementReference Top;
+
+    private void AddAffect()
+    {
+        _affect.AddAffect(Submit);
+        Submit = new AffectSubmit();
+        Top.FocusAsync();
+    }
+}

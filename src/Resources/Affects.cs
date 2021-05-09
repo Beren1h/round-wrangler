@@ -7,5 +7,10 @@ namespace wrangler.resources
             public const string START = "start";
             public const string END = "end";
         }
+
+        public static class MetaDataKeys 
+        {
+            public const string CONCENTRATION = "concentration";
+        }
     }
 }

@@ -1,28 +1,17 @@
-.not-active {
-    color: #494646;
-}
-
-.lcars {
+.header {
     display: flex;
-    flex-direction: rows;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 10px 0;
 }
 
-.button {
-    background-color: #1B1A1A;
-    padding: 3px 10px 5px 10px;
-    text-align: center;
-    cursor: pointer;
-    margin: 0 0 0 0;
+.header .turn {
+    flex: 1.25 0 0;
+    padding: 0 0 0 10px;
+    font-size: 24px;
 }
 
-.button.green {
-    background-color: darkgreen;
-    border: 3px solid  chartreuse;
-}
-
-.button.red {
-    color: red;
-    background-color: darkred;
-    border: 3px solid red;
-    margin: 0 0 20px 0;
+.concentration {
+    color: gold;
 }
