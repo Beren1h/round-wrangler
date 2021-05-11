@@ -10,49 +10,92 @@
 @inject AffectHandler _affect
 
 <div class="frame">
-    <div class="header">
-        <div class="round">
-                <Widget 
-                    Text=@("Round " + _bank.Combat.Round.ToString())
-                    Theme="dark"
-                    BodyClick="()=>_combat.NextRound()"
-                    RemoveClick="()=>_combat.EndCombat()"
-                />             
-        </div>
-        <div class="turn @_control.DetermineConcentrationCssClass()">@_bank.Combat.Turn</div>
-    </div>
     <div class="panels">
-        <div class="list wide debug0">
+        
+        <div class="list wide">
             <Forms />
         </div>
+        <div class="list">
+            <div class="list">
+                <Widget 
+                    Text=@HeaderMode().display
+                    Reference=@HeaderMode().reference
+                    BodyClick=@HeaderMode().bodyClick
+                    RemoveClick=@HeaderMode().removeClick
+                />  
+                <div class="list row">
+                    <div class="list">
+                        @foreach(var combatant in _bank.Combatants)
+                        {
+                            <Widget 
+                                Text=@combatant.Name 
+                                Reference=@combatant
+                                BodyClick="()=>_control.DetermineCombatantWidgetBodyClickAction(combatant)"
+                                RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
+                            />    
+                        }
+                    </div>
+                    <div class="list">
+                        @foreach(var affect in _bank.Affects)
+                        {
+                            <Widget 
+                                Text=@affect.Description
+                                Reference=@affect
+                                BodyClick="()=>_affect.AssignAffect(affect)"
+                                RemoveClick="()=>_affect.RemoveAffect(affect)"
+                            />                   
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* <div class="list wide debug0">
+        </div>
+   
         <div class="list debug1">
-            @foreach(var combatant in _bank.Combatants)
-            {
-                <Widget 
-                    Text=@combatant.Name 
-                    Theme="dark"
-                    Nested="_control.GetAffectWidgets(combatant)"
-                    CssClass=@_control.DetermineCombatantWidgetCssClass(combatant)
-                    BodyClick="()=>_combat.SetTurn(combatant.Name)"
-                    RemoveClick="()=>_combatant.RemoveCombatant(combatant.Name)"
-                />    
-            }
+           
+            <div class="list">
+                 
+
+            </div>
+            <div class="list">
+
+            </div>
+
         </div>
-        <div class="list debug2">
-            @foreach(var affect in _bank.Affects)
-            {
-                <Widget 
-                    Text=@affect.Description
-                    Theme="red"
-                />                   
-            }
-        </div>
+        <div class="list other debug2">
+
+        </div> *@
     </div>
 </div>
 
 @code {
 
+    private (string display, Action bodyClick, Action removeClick, string reference) HeaderMode()
+    {
+        (string display, Action bodyClick, Action removeClick, string reference) modes = default;
 
+        if (_bank.AffectBeingAssigned != null)
+        {
+            modes.display = $"Assigning {_bank.AffectBeingAssigned.Description}";
+            modes.bodyClick = () => {};
+            modes.removeClick = () => {};
+            modes.reference = "assignment";
+            //return $"Assigning {_bank.AffectBeingAssigned.Description}";
+        }
+        else
+        {
+            modes.display = $"Round {_bank.Combat.Round.ToString()}";
+            modes.bodyClick = () => _combat.NextRound();
+            modes.removeClick = () => _combat.EndCombat();
+            modes.reference = "round";
+            //return $"Round {_bank.Combat.Round.ToString()}";
+        }
+
+        return modes;
+    }
+    
     protected override void OnInitialized()
     {
         _combatant.OnChange += Update;
@@ -66,17 +109,4 @@
             StateHasChanged();
         });
     } 
-
-
-
-
-
-
-    private string Add { get; set;} = "Willma";
-    public bool IsConcentration { get; set; }
-    private string msg = "asd";
-    private void Say(string message)
-    {
-        Console.WriteLine(message);
-    }
 }

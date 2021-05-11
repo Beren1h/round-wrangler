@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using wrangler.data;
+using wrangler.events;
 using wrangler.models;
 
 namespace wrangler.handlers
@@ -8,10 +9,14 @@ namespace wrangler.handlers
     public class CombatantHandler : Handler
     {
         private readonly MemoryBank _bank;
-        public CombatantHandler(MemoryBank bank)
-        {
+
+        public CombatantHandler(
+            MemoryBank bank
+        ){
             _bank = bank;
         }
+
+        public event EventHandler<CombatantChangedEventArgs> OnCombatantChanged;
 
         public void RemoveAffectWidget(Combatant combatant, Affect affect)
         {
@@ -19,9 +24,25 @@ namespace wrangler.handlers
             Notify();
         }
 
+        public void AddAffectWidget(Combatant combatant, Affect affect)
+        {
+            combatant.Affects.Add(affect);
+
+            var sorted = combatant.Affects.OrderBy(a => a.Description).ToList();
+
+            combatant.Affects = sorted;
+
+            Notify();
+        }
+        
         public void AddCombatant(string name)
         {
             if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+            
+            if (_bank.Combatants.Any(c => c.Name == name))
             {
                 return;
             }
@@ -35,18 +56,25 @@ namespace wrangler.handlers
 
             _bank.Combatants = sorted;
 
-            Console.WriteLine($"{name} added");
+            //Console.WriteLine($"{name} added");
 
             Notify();
         }
 
-        public void RemoveCombatant(string name)
+        public void RemoveCombatant(Combatant combatant)
         {
-            var match = _bank.Combatants.FirstOrDefault(c => c.Name == name);
+            //var match = _bank.Combatants.FirstOrDefault(c => c.Name == name);
 
-            match.IsActive = !match.IsActive;
+            //match.IsActive = !match.IsActive;
 
-            Console.WriteLine($"{name} removed");
+            combatant.IsActive = !combatant.IsActive;
+            
+            //Console.WriteLine($"{combatant.Name} removed");
+
+            if (OnCombatantChanged != null)
+            {
+                OnCombatantChanged(this, new CombatantChangedEventArgs());
+            }
 
             Notify();
         }

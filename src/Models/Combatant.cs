@@ -13,6 +13,7 @@ namespace wrangler.models
         public bool IsTurn { get; set; }
         public bool TurnTaken { get; set; }
         public bool IsActive { get; set; }
+        public bool IsConcentrating { get; set; }
         public List<Affect> Affects { get; set; }
     }
 }

@@ -21,12 +21,17 @@ body {
 .frame .panels .list {
     display: flex;
     flex-direction: column;
-    flex: 0.75 0 0;
-    padding: 3px 3px 0 3px;
+    flex: 1 0 auto;
+    padding: 3px 3px 0px 3px;
+}
+
+.frame .panels .list.row {
+    flex-direction: row;
+    padding: 3px 0 0 0;
 }
 
 .frame .panels .list.wide {
-    flex: 1.25 0 auto;
+    flex: 0 0 200px;
 }
 
 
@@ -55,13 +60,13 @@ body {
     }
 
 .debug0 {
-    background-color: #111111;
+    background-color: green;
 }
 
 .debug1 {
-    background-color: #111111;
+    background-color: blue;
 }
 
 .debug2 {
-    background-color: #111111;
+    background-color: yellow;
 }

@@ -6,27 +6,91 @@
     margin: 0 0 3px 0;
 }
 
-.widget.red, .remove-x.red {
-    background-color: #870000;
-    border: 2px solid #f9683a;
-    color: #f9683a;
+.widget .nest {
+    display: flex;
+    flex-direction: column;
+    margin: 3px 0 0 0;
+}
+
+.widget.turn, .remove-x.turn {
+    background-color: #1faa00;
+    /* border: 2px solid #9cff57; */
+    color: #9cff57;
     font-weight: 600;
+}
+
+.widget.round, .remove-x.round {
+    background-color: #0026ca;
+    border: 2px solid #304ffe;
+    color: #62ebff;
+    font-weight: 600;
+}
+
+.widget.assignment {
+    background-color: #ac0800;
+    border: 2px solid #e64a19;
+    color: #e64a19;
+    font-weight: 600;
+}
+
+.remove-x.assignment {
+    opacity: 0;
+}
+
+.remove-x.round {
+    color: #304ffe;
 }
 
 .widget.dark, .remove-x.dark {
-    background-color: #000000;
-    border: 2px solid #484848;
-    color: #484848;
+    background-color: #34515e;
+    /* border: 2px solid #304ffe; */
+    color: #8eacbb;
     font-weight: 600;
 }
 
-.widget.dark.not-active {
-    color: #000000;
+.widget.red, .remove-x.red {
+    background-color: #ac0800;
+    /* border: 2px solid #f9683a; */
+    color: #e64a19;
+    font-weight: 600;
 }
 
-.turn-taken {
-    opacity: 0.25;
+/* .widget.red .widget-body{
+    min-width: 0px;
+} */
+
+.widget.affect, .remove-x.affect {
+    background-color: #1c313a;
+    /* border: 2px solid #484848; */
+    color: #718792;
+    font-weight: 600;
 }
+
+
+/* .widget.dark.assignment {
+    border: 2px solid purple;
+} */
+
+/* .widget.dark.concentration {
+    color: gold;
+} */
+
+.widget.concentration {
+    /* text-decoration: underline; */
+    border: 1px solid gold;
+}
+
+/* .widget.dark.not-active {
+    opacity: 0.25;
+} */
+
+.widget.muted {
+    opacity: 0.20;
+}
+
+/* .turn-taken {
+    opacity: 0.25;
+} */
 
 .widget-body {
     display: flex;
@@ -34,7 +98,10 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
-    padding: 3px 3px 3px 5px;
+    padding: 3px 15px 3px 5px;
+    font-size: 24px;
+    user-select: none;
+    /* min-width: 150px; */
 }
 
 .widget-remove {
@@ -43,6 +110,7 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    user-select: none;
     padding: 3px;
 }
 
@@ -57,5 +125,3 @@
     font-size: 17px;
     padding: 0 0 1px 0;
 }
-
-

@@ -1,41 +1,53 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
+using wrangler.configuration;
 using wrangler.models;
 
 namespace wrangler.data
 {
     public class MemoryBank
     {
+        public Affect AffectBeingAssigned { get; set; }
         public MemoryBank(){
-            
-            var affect= new Affect { 
-                Id = Guid.NewGuid().ToString(),
-                Description = "Fire",
-                Expiration = new Expiration {
-                    Turn = "Fred"
-                },
-                MetaData = new Dictionary<string, string> {
-                    { resources.Affects.MetaDataKeys.CONCENTRATION, "Fred" }
-                }
-            };
-
-            Combatants = new List<Combatant>{
-                new Combatant { Name = "Fred", IsActive = true },
-                new Combatant { 
-                    Name = "Barney", 
-                    IsActive = true, 
-                    Affects = new List<Affect>{
-                        affect
-                    }  
-                }
-            };
-
+            Affects = new List<Affect>();
             Combat = new Combat();
-            
-            Affects = new List<Affect>{
-                affect
+            Combatants = new List<Combatant>();
+
+            var affect= new Affect { 
+                Description = "hold person",
+                Expiration = new Expiration {
+                    Round = 9
+                },
             };
+
+            var combatant = new Combatant {
+                Name = "Fred",
+                Affects = new List<Affect> {
+                    affect
+                }
+            };
+
+            // Affects.Add(affect);
+            // Combatants.Add(combatant);
+
+            // Combatants = new List<Combatant>{
+            //     new Combatant { Name = "Fred", IsActive = true },
+            //     new Combatant { 
+            //         Name = "Barney", 
+            //         IsActive = true, 
+            //         Affects = new List<Affect>{
+            //             affect
+            //         }  
+            //     }
+            // };
+
+            // Combat = new Combat();
+            
+            // Affects = new List<Affect>{
+            //     affect
+            // };
         }
 
         public Combat Combat { get; set; }

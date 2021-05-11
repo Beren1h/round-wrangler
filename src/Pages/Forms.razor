@@ -37,14 +37,6 @@
     </div>
 
     <div class="control">
-        <label class="label">concentration ?</label>
-        <select @bind="Submit.MetaData[resources.Affects.MetaDataKeys.CONCENTRATION]">
-            <option value="false">no</option>
-            <option value="true">yes</option>
-        </select>
-    </div>
-
-    <div class="control">
         <label class="label">expiration pointer</label>
         <select @bind="Submit.Expiration.Pointer">
             <option value="@resources.Affects.Pointers.END">@resources.Affects.Pointers.END</option>
@@ -52,21 +44,29 @@
         </select>
     </div>
 
+    <div class="control">
+        <label class="label">concentration ?</label>
+        <select @bind="Submit.IsConcentration">
+            <option value="@resources.Affects.Concentration.NO">@resources.Affects.Concentration.NO</option>
+            <option value="@resources.Affects.Concentration.YES">@resources.Affects.Concentration.YES</option>
+        </select>
+    </div>
+    
     <div class="control button-line">
-        <button @onclick="AddAffect">Go</button>
+        <button @onclick="AddAffect">Add Affect</button>
     </div>
 
 </div>
 
 @code {
-    AffectSubmit Submit = new AffectSubmit();
+    Affect Submit = new Affect();
 
     private ElementReference Top;
 
     private void AddAffect()
     {
         _affect.AddAffect(Submit);
-        Submit = new AffectSubmit();
+        Submit = new Affect();
         Top.FocusAsync();
     }
 }

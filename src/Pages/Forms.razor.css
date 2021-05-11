@@ -19,11 +19,11 @@
 .control input, select {
     flex: 1 0 50%;
     border: none;
-    border-bottom: 2px solid #616161;
+    border-bottom: 2px solid #62727b;
     padding: 7px 3px 3px 0px;
     background-color: transparent;
     font-size: 20px;
-    color: #616161
+    color: #62727b
 }
 
 .control select option {
@@ -39,19 +39,19 @@
 .control label {
     margin: -12px 0 0 0;
     position: absolute;
-    color: #616161
+    color: #62727b
 }
 
 button {
     border: none;
     border-radius: 8px;
     height: 27px;
-    background-color: #616161;
+    background-color: #62727b;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     color: #222222;
-    width: 75px;
+    /* width: 75px; */
 }
 
 input[type="checkbox"] {

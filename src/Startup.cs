@@ -27,7 +27,7 @@ namespace wrangler
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-             services.Configure<wrangler.models.Party>(Configuration.GetSection("Party"));
+             services.Configure<wrangler.configuration.Party>(Configuration.GetSection("Party"));
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

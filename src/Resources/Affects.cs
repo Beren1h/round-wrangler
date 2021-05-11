@@ -8,9 +8,14 @@ namespace wrangler.resources
             public const string END = "end";
         }
 
-        public static class MetaDataKeys 
+        public static class Concentration
         {
-            public const string CONCENTRATION = "concentration";
+            public const string YES = "yes";
+            public const string NO = "no";
         }
+        // public static class MetaDataKeys 
+        // {
+        //     public const string CONCENTRATION = "concentration";
+        // }
     }
 }
