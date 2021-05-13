@@ -9,7 +9,7 @@
 .widget .nest {
     display: flex;
     flex-direction: column;
-    margin: 3px 0 0 0;
+    margin: 3px 3px 0 0;
 }
 
 .widget.turn, .remove-x.turn {
@@ -17,6 +17,15 @@
     /* border: 2px solid #9cff57; */
     color: #9cff57;
     font-weight: 600;
+}
+
+.widget object {
+    display: none;
+}
+
+.widget.dead object {
+    display: block;
+    margin: 0 0 0 5px;
 }
 
 .widget.round, .remove-x.round {
@@ -42,7 +51,8 @@
 }
 
 .widget.dark, .remove-x.dark {
-    background-color: #34515e;
+    background-color: #111111;
+    /* background-color: #34515e; */
     /* border: 2px solid #304ffe; */
     color: #8eacbb;
     font-weight: 600;
@@ -84,8 +94,9 @@
     opacity: 0.25;
 } */
 
+
 .widget.muted {
-    opacity: 0.20;
+    opacity: 0.15;
 }
 
 /* .turn-taken {
@@ -98,7 +109,7 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
-    padding: 3px 15px 3px 5px;
+    padding: 3px 3px 3px 5px;
     font-size: 24px;
     user-select: none;
     /* min-width: 150px; */

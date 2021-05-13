@@ -11,6 +11,7 @@
 <div class="widget @Theme">
     <div class="widget-body" @onclick="() => InvokeClick(0)">
         @Text
+        <object data="css/skull.svg" width="25" height="25"  />
     </div>
     <div class="nest">
         @if(IsCombatantReference)
@@ -126,7 +127,12 @@
         
         Theme = "dark";
 
-        if (!combatant.IsActive || combatant.TurnTaken)
+        if (!combatant.IsActive)
+        {
+            Theme = "dark muted dead";
+        }
+
+        if (combatant.IsActive && combatant.TurnTaken)
         {
             Theme = "dark muted";
         }
