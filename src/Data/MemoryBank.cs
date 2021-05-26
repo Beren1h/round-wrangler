@@ -29,6 +29,8 @@ namespace wrangler.data
                 }
             };
 
+            TensionDie = 4;
+
             // Affects.Add(affect);
             // Combatants.Add(combatant);
 
@@ -55,5 +57,7 @@ namespace wrangler.data
         public List<Combatant> Combatants { get; set; }
 
         public List<Affect> Affects { get; set; }
+
+        public int TensionDie { get; set; }
     }
 }

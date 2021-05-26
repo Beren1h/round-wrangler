@@ -34,7 +34,9 @@ body {
     flex: 0 0 200px;
 }
 
-
+.frame .panels .list.nudge {
+    padding-top: 6px;
+}
 
 /* ******************* end ********************* */
 

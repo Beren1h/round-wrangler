@@ -8,10 +8,10 @@
 @inject ControlHandler _control
 @inject CombatHandler _combat
 @inject AffectHandler _affect
+@inject TensionHandler _tension
 
 <div class="frame">
     <div class="panels">
-        
         <div class="list wide">
             <Forms />
         </div>
@@ -49,7 +49,14 @@
                 </div>
             </div>
         </div>
-
+        <div class="list nudge">
+            <Widget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />           
+        </div>
         @* <div class="list wide debug0">
         </div>
    
@@ -90,7 +97,7 @@
             modes.bodyClick = () => _combat.NextRound();
             modes.removeClick = () => _combat.EndCombat();
             modes.reference = "round";
-            //return $"Round {_bank.Combat.Round.ToString()}";
+             //return $"Round {_bank.Combat.Round.ToString()}";
         }
 
         return modes;
