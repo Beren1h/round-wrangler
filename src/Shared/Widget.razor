@@ -1,0 +1,164 @@
+@page "/widget"
+
+@using events
+@using models
+@using handlers
+
+@inject CombatHandler _combat
+@inject CombatantHandler _combatant
+@inject AffectHandler _affect
+
+<div class="widget @Theme">
+    <div class="widget-body" @onclick="() => InvokeClick(0)">
+        @Text
+        <object data="css/skull.svg" width="25" height="25"  />
+    </div>
+    <div class="nest">
+        @if(IsCombatantReference)
+        {
+            var combatant = (Combatant)Reference;
+            @foreach(var affect in combatant.Affects)
+            {
+                <Widget 
+                    Text="@affect.Description"
+                    DisplayOnly=DisplayOnly
+                    Reference=@("affect")
+                    RemoveClick="()=>_combatant.RemoveAffectWidget(combatant, affect)"
+                />
+            }
+        }
+    </div>
+    @if(!DisplayOnly)
+    {
+        <div class="widget-remove" @onclick="() => InvokeClick(1)">
+            <div class="remove-x @Theme">x</div>
+        </div>
+    }
+</div>
+
+@code {
+
+//_combatant.RemoveAffectWidget(combatant, affect)
+    //private string Id = Guid.NewGuid().ToString();
+    private string Theme { get; set; } = "dark";
+
+    //[Parameter] public Combatant Combatant { get; set; }
+    [Parameter] public dynamic Reference { get; set; }
+
+    //[Parameter] public string Style { get; set;}
+    [Parameter] public Action BodyClick { get; set; }
+    [Parameter] public Action RemoveClick { get; set; }
+    [Parameter] public string Text { get; set; }
+
+    [Parameter] public string Override { get; set; }
+
+    [Parameter] public bool DisplayOnly { get; set; }
+
+    //[Parameter] public string CssClass { get; set; }
+    //[Parameter] public string Theme { get; set; }
+    //[Parameter] public List<WidgetProperties> Nested { get; set; } = new List<WidgetProperties>();
+    //[Parameter] public Dictionary<string, string> MetaData { get; set; } = new Dictionary<string, string>();
+
+    private bool IsCombatantReference { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Reference == null)
+        {
+            return;
+        }
+
+        if(Reference.GetType() == typeof(string))
+        {
+            var value = (string)Reference;
+            
+            switch(value)
+            {
+                case "round":
+                    Theme = "round";
+                    break;
+                case "red":
+                    Theme = "red";
+                    break;
+                case "affect":
+                    Theme = "affect";
+                    break;
+                case "assignment":
+                    Theme = "assignment";
+                    break;                    
+                default:
+                    Theme = "dark";
+                    break;
+            }
+        }
+
+        if (Reference.GetType() == typeof(wrangler.models.Combatant))
+        {
+            _combatant.OnCombatantChanged += UpdateCombatantTheme;
+            _combat.OnCombatantChanged += UpdateCombatantTheme;
+            _affect.OnCombatantChanged += UpdateCombatantTheme;
+            IsCombatantReference = true;
+        }
+
+        if (Reference.GetType() == typeof(wrangler.models.Affect))
+        {
+            _affect.OnAssignmentAffectChanged += UpdateAffectTheme;
+            Theme = "affect";
+        }
+    }
+
+    private void UpdateAffectTheme(object sender, AssignmentAffectChangedEventArgs e)
+    {
+        var affect = (Affect)Reference;
+        
+        Theme = "affect";
+        
+        if (e.Affect == affect)
+        {
+            Theme = "red";
+        }
+    }
+
+    private void UpdateCombatantTheme(object sender, CombatantChangedEventArgs e)
+    {
+        var combatant = (Combatant)Reference;
+
+        //Console.WriteLine($"{combatant.Name}, isturn={combatant.IsTurn}, turntaken={combatant.TurnTaken}, isactive={combatant.IsActive}, isconcentrating={combatant.IsConcentrating}");
+        
+        Theme = "dark";
+
+        if (!combatant.IsActive)
+        {
+            Theme = "dark muted dead";
+        }
+
+        if (combatant.IsActive && combatant.TurnTaken)
+        {
+            Theme = "dark muted";
+        }
+
+        if (combatant.IsActive && combatant.IsTurn)
+        {
+            Theme = "turn";
+        }
+
+        if (combatant.IsConcentrating)
+        {
+            Theme = Theme += " concentration";
+        }
+
+    }
+
+    private void InvokeClick(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                RemoveClick?.Invoke();
+            break;
+            default:
+                BodyClick?.Invoke();
+            break;
+        }
+    }
+}

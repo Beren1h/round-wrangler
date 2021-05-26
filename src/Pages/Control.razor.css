@@ -1,79 +1,23 @@
-.not-active {
-    color: #494646;
-}
-
-.panel {
+.header {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 10px 10px 0;
 }
 
-.panel-right {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+.header .round {
+    flex: 0 0 auto;
 }
 
-.panel-left {
-    padding: 5px;
-}
-
-.listor {
+.header .turn {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    background-color: #1B1A1A;
-    border: 3px solid #302e2e;
-    margin: 4px;
-    border-radius: 25px;
+    flex: 1 0 auto;
+    padding: 0 0 0 10px;
+    font-size: 24px;
 }
 
-.listor .combatant {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    min-width: 100px;
-    margin: 0px 7px 0px 0px;
-    padding: 5px 5px 5px 10px;
-    cursor: pointer;
-}
-
-.listor .remove {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-right: 7px;
-}
-
-.x {
-	width: 20px;
-	height: 20px;
-    font-family: 'Arial';
-    font-weight: bold;
-    color: #494646;
-	border: 2px solid #494646;
-	background-color: black;
-	border-radius: 50%;
-    text-align: center;
-    line-height: 15px;
-}
-
-.x:hover { cursor: pointer; }
-
-.button {
-    background-color: #1B1A1A;
-    padding: 3px 10px 5px 10px;
-    border-radius: 25px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.button.green {
-    background-color: darkgreen;
-    border: 3px solid  chartreuse;
-}
-
-.button.red {
-    color: red;
-    background-color: darkred;
-    border: 3px solid red;
+.concentration {
+    color: gold;
 }

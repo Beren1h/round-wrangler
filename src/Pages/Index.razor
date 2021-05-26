@@ -1,3 +1,50 @@
 @page "/"
 
-<h1>Hello, world!</h1>
+@using wrangler.data
+@using wrangler.handlers
+
+@inject MemoryBank _bank
+@inject CombatantHandler _combatant
+@inject ControlHandler _control
+@inject CombatHandler _combat
+@inject AffectHandler _affect
+
+<div class="frame">
+    <div class="panel">
+        <div class="list">
+            <Widget 
+                Text=@("Round " + _bank.Combat.Round)
+                Reference=@("round")
+                DisplayOnly=@(true)
+                BodyClick="()=>{}"
+                RemoveClick="()=>{}"
+            />
+            @foreach(var combatant in _bank.Combatants)
+            {
+                <Widget 
+                    Text=@combatant.Name
+                    DisplayOnly=@(true) 
+                    Reference=@combatant
+                    BodyClick="()=>{}"
+                    RemoveClick="()=>{}"
+                />    
+            }            
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        _combatant.OnChange += Update;
+        _combat.OnChange += Update;
+        _affect.OnChange += Update;
+    }
+
+    private void Update()
+    {
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    }    
+}

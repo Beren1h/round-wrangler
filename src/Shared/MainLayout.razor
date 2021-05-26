@@ -1,37 +1,3 @@
 @inherits LayoutComponentBase
 
-@using wrangler.handlers
-@inject Memory _memory
-
-<div class="page">
-    <div class="main">
-        <div class="top-row">
-            @if (_memory.Initiative.Round != 0)
-            {
-                <h5>Round @_memory.Initiative.Round</h5>
-            }
-            @if (!string.IsNullOrEmpty(_memory.Initiative.Turn))
-            {
-                <h2>@_memory.Initiative.Turn</h2>
-            }
-        </div>
-        <div>
-            @Body
-        </div>
-    </div>
-</div>
-
-@code {
-
-    protected override void OnInitialized()
-    {
-        _memory.OnChange += Update;
-    }
-
-    private void Update()
-    {
-        InvokeAsync(() => {
-            StateHasChanged();
-        });
-    }
-}
+@Body

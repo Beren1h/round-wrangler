@@ -1,38 +1,44 @@
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: black;
+    background-color: #111111;
 }
 
-a, .btn-link {
-    color: #0366d6;
+.frame {
+    display: flex;
+    flex-direction: column;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+.frame .panels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
 }
 
-.content {
-    padding-top: 1.1rem;
+.frame .panels .list {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    padding: 3px 3px 0px 3px;
 }
 
-.valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+.frame .panels .list.row {
+    flex-direction: row;
+    padding: 3px 0 0 0;
 }
 
-.invalid {
-    outline: 1px solid red;
+.frame .panels .list.wide {
+    flex: 0 0 200px;
 }
 
-.validation-message {
-    color: red;
-}
+
+
+/* ******************* end ********************* */
+
+
 
 #blazor-error-ui {
     background: lightyellow;
@@ -52,3 +58,15 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.debug0 {
+    background-color: green;
+}
+
+.debug1 {
+    background-color: blue;
+}
+
+.debug2 {
+    background-color: yellow;
+}

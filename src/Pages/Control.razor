@@ -1,43 +1,112 @@
 @page "/control"
 
+@using wrangler.data
 @using wrangler.handlers
-@inject Memory _memory
 
+@inject MemoryBank _bank
+@inject CombatantHandler _combatant
+@inject ControlHandler _control
+@inject CombatHandler _combat
+@inject AffectHandler _affect
 
-<div class="panel">
-    <div class="panel-right">
-        <h3 class="button green" @onclick="_memory.NextRound">@(_memory.Initiative.Round == 0 ? "Start" : "Next")</h3>
-        <h3 class="button red" @onclick="_memory.EndCombat">End</h3>
-        <input @bind="Combatant" @onkeyup="@Enter" />
-    </div>
-    <div class="panel-left">
-        @foreach(var combatant in _memory.Initiative.Combatants.Where(c => !c.TurnTaken)){
-            <div class="listor">
-                <div class="@(!combatant.IsActive ? "combatant not-active" : "combatant")" @onclick="() => _memory.SetTurn(combatant.Name)">
-                    @combatant.Name
-                </div>
-                <div class="remove" @onclick="() => _memory.RemoveCombatant(combatant.Name)">
-                    <div class="x">x</div>
+<div class="frame">
+    <div class="panels">
+        
+        <div class="list wide">
+            <Forms />
+        </div>
+        <div class="list">
+            <div class="list">
+                <Widget 
+                    Text=@HeaderMode().display
+                    Reference=@HeaderMode().reference
+                    BodyClick=@HeaderMode().bodyClick
+                    RemoveClick=@HeaderMode().removeClick
+                />  
+                <div class="list row">
+                    <div class="list">
+                        @foreach(var combatant in _bank.Combatants)
+                        {
+                            <Widget 
+                                Text=@combatant.Name 
+                                Reference=@combatant
+                                BodyClick="()=>_control.DetermineCombatantWidgetBodyClickAction(combatant)"
+                                RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
+                            />    
+                        }
+                    </div>
+                    <div class="list">
+                        @foreach(var affect in _bank.Affects)
+                        {
+                            <Widget 
+                                Text=@affect.Description
+                                Reference=@affect
+                                BodyClick="()=>_affect.AssignAffect(affect)"
+                                RemoveClick="()=>_affect.RemoveAffect(affect)"
+                            />                   
+                        }
+                    </div>
                 </div>
             </div>
-        }
+        </div>
+
+        @* <div class="list wide debug0">
+        </div>
+   
+        <div class="list debug1">
+           
+            <div class="list">
+                 
+
+            </div>
+            <div class="list">
+
+            </div>
+
+        </div>
+        <div class="list other debug2">
+
+        </div> *@
     </div>
 </div>
 
 @code {
-    private string Combatant { get; set; }
 
-    public void Enter (KeyboardEventArgs e)
+    private (string display, Action bodyClick, Action removeClick, string reference) HeaderMode()
     {
-        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        (string display, Action bodyClick, Action removeClick, string reference) modes = default;
+
+        if (_bank.AffectBeingAssigned != null)
         {
-            _memory.AddCombatant(Combatant);
-            Combatant = string.Empty;
+            modes.display = $"Assigning {_bank.AffectBeingAssigned.Description}";
+            modes.bodyClick = () => {};
+            modes.removeClick = () => {};
+            modes.reference = "assignment";
+            //return $"Assigning {_bank.AffectBeingAssigned.Description}";
         }
+        else
+        {
+            modes.display = $"Round {_bank.Combat.Round.ToString()}";
+            modes.bodyClick = () => _combat.NextRound();
+            modes.removeClick = () => _combat.EndCombat();
+            modes.reference = "round";
+            //return $"Round {_bank.Combat.Round.ToString()}";
+        }
+
+        return modes;
     }
-    private void AddCombatant()
+    
+    protected override void OnInitialized()
     {
-        _memory.AddCombatant(Combatant);
-        Combatant = string.Empty;
+        _combatant.OnChange += Update;
+        _combat.OnChange += Update;
+        _affect.OnChange += Update;
     }
+
+    private void Update()
+    {
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    } 
 }
