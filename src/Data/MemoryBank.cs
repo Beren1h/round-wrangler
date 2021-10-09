@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Options;
-using wrangler.configuration;
 using wrangler.models;
 
 namespace wrangler.data
@@ -15,41 +11,21 @@ namespace wrangler.data
             Combat = new Combat();
             Combatants = new List<Combatant>();
 
-            var affect= new Affect { 
-                Description = "hold person",
-                Expiration = new Expiration {
-                    Round = 9
-                },
-            };
+            // var affect= new Affect { 
+            //     Description = "hold person",
+            //     Expiration = new Expiration {
+            //         Round = 9
+            //     },
+            // };
 
-            var combatant = new Combatant {
-                Name = "Fred",
-                Affects = new List<Affect> {
-                    affect
-                }
-            };
-
-            TensionDie = 4;
-
-            // Affects.Add(affect);
-            // Combatants.Add(combatant);
-
-            // Combatants = new List<Combatant>{
-            //     new Combatant { Name = "Fred", IsActive = true },
-            //     new Combatant { 
-            //         Name = "Barney", 
-            //         IsActive = true, 
-            //         Affects = new List<Affect>{
-            //             affect
-            //         }  
+            // var combatant = new Combatant {
+            //     Name = "Fred",
+            //     Affects = new List<Affect> {
+            //         affect
             //     }
             // };
 
-            // Combat = new Combat();
-            
-            // Affects = new List<Affect>{
-            //     affect
-            // };
+            //TensionDie = 4;
         }
 
         public Combat Combat { get; set; }

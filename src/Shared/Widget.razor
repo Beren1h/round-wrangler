@@ -12,7 +12,7 @@
 <div class="widget @Theme">
     <div class="widget-body" @onclick="() => InvokeClick(0)">
         @Text
-        <object data="css/skull.svg" width="25" height="25"  />
+        <object data="css/skull.svg" width="25" height="25" />
     </div>
     <div class="nest">
         @if(IsCombatantReference)
@@ -39,27 +39,14 @@
 
 @code {
 
-//_combatant.RemoveAffectWidget(combatant, affect)
-    //private string Id = Guid.NewGuid().ToString();
     private string Theme { get; set; } = "dark";
 
-    //[Parameter] public Combatant Combatant { get; set; }
     [Parameter] public dynamic Reference { get; set; }
-
-    //[Parameter] public string Style { get; set;}
     [Parameter] public Action BodyClick { get; set; }
     [Parameter] public Action RemoveClick { get; set; }
     [Parameter] public string Text { get; set; }
-
     [Parameter] public string Override { get; set; }
-
     [Parameter] public bool DisplayOnly { get; set; }
-
-    //[Parameter] public string CssClass { get; set; }
-    //[Parameter] public string Theme { get; set; }
-    //[Parameter] public List<WidgetProperties> Nested { get; set; } = new List<WidgetProperties>();
-    //[Parameter] public Dictionary<string, string> MetaData { get; set; } = new Dictionary<string, string>();
-
     private bool IsCombatantReference { get; set; }
 
     protected override void OnInitialized()
@@ -135,8 +122,6 @@
     private void UpdateCombatantTheme(object sender, CombatantChangedEventArgs e)
     {
         var combatant = (Combatant)Reference;
-
-        //Console.WriteLine($"{combatant.Name}, isturn={combatant.IsTurn}, turntaken={combatant.TurnTaken}, isactive={combatant.IsActive}, isconcentrating={combatant.IsConcentrating}");
         
         Theme = "dark";
 
