@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using wrangler.data;
 using wrangler.events;
@@ -47,29 +48,40 @@ namespace wrangler.handlers
                 return;
             }
             
-            _bank.Combatants.Add(new Combatant {
+            var combtant = new Combatant {
                 Name = name,
-                IsActive = true
-            });
+                IsActive = true,
+                InactiveReason = resources.Exits.DOWN
+            };
+
+            _bank.Combatants.Add(combtant);
 
             var sorted = _bank.Combatants.OrderBy(c => c.Name).ToList();
 
             _bank.Combatants = sorted;
-
-            //Console.WriteLine($"{name} added");
 
             Notify();
         }
 
         public void RemoveCombatant(Combatant combatant)
         {
-            //var match = _bank.Combatants.FirstOrDefault(c => c.Name == name);
-
-            //match.IsActive = !match.IsActive;
-
-            combatant.IsActive = !combatant.IsActive;
-            
-            //Console.WriteLine($"{combatant.Name} removed");
+            if (_bank.InactiveReason == resources.Exits.REMOVE)
+            {
+                var copy = new List<Combatant>(_bank.Combatants);
+                foreach(var clone in copy)
+                {
+                    Console.WriteLine($"{clone.Name}, active={clone.IsActive}, reason={clone.InactiveReason}");
+                    clone.IsTurn = false;
+                }
+                copy.Remove(combatant);
+                var sorted = copy.OrderBy(c => c.Name).ToList();
+                _bank.Combatants = sorted;
+            }
+            else
+            {
+                combatant.IsActive = !combatant.IsActive;
+                combatant.InactiveReason = _bank.InactiveReason;
+            }
 
             if (OnCombatantChanged != null)
             {

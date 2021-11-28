@@ -33,7 +33,6 @@ namespace wrangler.handlers
         public void EndCombat()
         {
             _bank.Combat.Round = 0;
-            //_bank.Combat.Turn = string.Empty;
             _bank.Combat.Turn = null;
             _bank.Combatants = new List<Combatant>();
             Notify();
@@ -55,16 +54,6 @@ namespace wrangler.handlers
                 combatant.TurnTaken = false;
             }
 
-            // if (OnRoundChaning != null)
-            // {
-            //     var copy  _bank.Combat.Round;
-            //     OnRoundChaning(this, new RoundChangingEventArgs{
-            //         Incoming = copy++, 
-            //         Outgoing = copy
-            //     });
-            // }
-
-            //_bank.Combat.Turn = string.Empty;
             _bank.Combat.Turn = null;
             _bank.Combat.Round++;
 
@@ -78,12 +67,6 @@ namespace wrangler.handlers
             Notify();
         }
 
-        // public event EventHandler<TurnChangingEventArgs> OnTurnChanging;
-        // public event EventHandler<RoundChangingEventArgs> OnRoundChaning;
-
-        // public event EventHandler<TurnChangedEventArgs> OnTurnChanged;
-        // public event EventHandler<RoundChangedEventArgs> OnRoundChanged;
-
         public void SetTurn(Combatant incoming)
         {
             if (_bank.Combat.Round == 0)
@@ -96,23 +79,12 @@ namespace wrangler.handlers
                 return;
             }
             
-            //var current = _bank.Combatants.FirstOrDefault(c => c.Name == _bank.Combat.Turn);
             var current = _bank.Combat.Turn;
-            //var incoming = _bank.Combatants.FirstOrDefault(c => c.Name == name);
-            //var incoming = _bank.Combatants.FirstOrDefault(c => c == combatant);
 
             if (!incoming.IsActive)
             {
                 return;
             }
-
-            // if (OnTurnChanging != null)
-            // {
-            //     OnTurnChanging(this, new TurnChangingEventArgs{
-            //         Incoming = incoming, 
-            //         Outgoing = current
-            //     });
-            // }
 
             _affect.CheckExpirationOnTurn(incoming, current);
 
@@ -122,15 +94,8 @@ namespace wrangler.handlers
                 current.IsTurn = false;
             }
 
-            //_bank.Combat.Turn = name;
             _bank.Combat.Turn = incoming;
-            //incoming.TurnTaken = true;
             incoming.IsTurn = true;
-
-            // if (OnTurnChanged != null)
-            // {
-            //     OnTurnChanged(this, new TurnChangedEventArgs());
-            // }
 
             if (OnCombatantChanged != null)
             {

@@ -16,7 +16,13 @@
             <Forms />
         </div>
         <div class="list">
-            <div class="list">
+            <Widget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />             
+            @* <div class="list"> *@
                 <Widget 
                     Text=@HeaderMode().display
                     Reference=@HeaderMode().reference
@@ -47,16 +53,16 @@
                         }
                     </div>
                 </div>
-            </div>
+            @* </div> *@
         </div>
-        <div class="list nudge">
+        @* <div class="list">
             <Widget
                 Text=@($"Tension {_bank.TensionDie}")
                 Reference=@("tension")
                 BodyClick="()=>_tension.Add()"
                 RemoveClick="()=>_tension.Clear()"
             />           
-        </div>
+        </div> *@
     </div>
 </div>
 

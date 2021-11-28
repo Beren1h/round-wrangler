@@ -10,6 +10,7 @@ namespace wrangler.data
             Affects = new List<Affect>();
             Combat = new Combat();
             Combatants = new List<Combatant>();
+            InactiveReason = resources.Exits.DOWN;
 
             // var affect= new Affect { 
             //     Description = "hold person",
@@ -35,5 +36,7 @@ namespace wrangler.data
         public List<Affect> Affects { get; set; }
 
         public int TensionDie { get; set; }
+
+        public string InactiveReason { get; set; }
     }
 }

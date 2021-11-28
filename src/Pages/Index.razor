@@ -14,6 +14,13 @@
     <div class="panels">
         <div class="list">
             <Widget 
+                Text=@("Tension " + _bank.TensionDie)
+                Reference=@("tension")
+                DisplayOnly=@(true)
+                BodyClick="()=>{}"
+                RemoveClick="()=>{}"
+            />            
+            <Widget 
                 Text=@("Round " + _bank.Combat.Round)
                 Reference=@("round")
                 DisplayOnly=@(true)
@@ -31,7 +38,7 @@
                 />    
             }            
         </div>
-        <div class="list">
+        @* <div class="list">
             <Widget 
                 Text=@("Tension " + _bank.TensionDie)
                 Reference=@("tension")
@@ -39,7 +46,7 @@
                 BodyClick="()=>{}"
                 RemoveClick="()=>{}"
             />
-        </div>        
+        </div>         *@
     </div>
 </div>
 

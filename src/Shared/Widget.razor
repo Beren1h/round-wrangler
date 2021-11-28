@@ -3,16 +3,24 @@
 @using events
 @using models
 @using handlers
+@using data
 
 @inject CombatHandler _combat
 @inject CombatantHandler _combatant
 @inject AffectHandler _affect
 @inject TensionHandler _tension
+@inject MemoryBank _bank
 
+@* @($"Tension {_bank.TensionDie}") *@
+@* css/fled.svg *@
 <div class="widget @Theme">
     <div class="widget-body" @onclick="() => InvokeClick(0)">
         @Text
-        <object data="css/skull.svg" width="25" height="25" />
+        @if(IsCombatantReference)
+        {
+            var combatant = (Combatant)Reference;
+            <object data=@($"css/{combatant.InactiveReason}.svg") width="25" height="25" />
+        }
     </div>
     <div class="nest">
         @if(IsCombatantReference)

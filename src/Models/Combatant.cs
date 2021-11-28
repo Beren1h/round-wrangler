@@ -14,6 +14,7 @@ namespace wrangler.models
         public bool TurnTaken { get; set; }
         public bool IsActive { get; set; }
         public bool IsConcentrating { get; set; }
+        public string InactiveReason { get; set; }
         public List<Affect> Affects { get; set; }
     }
 }
