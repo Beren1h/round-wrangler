@@ -3,14 +3,16 @@
     flex-direction: row;
     justify-content: space-between;
     border-radius: 3px;
-    margin: 0 0 3px 0;
+    /* margin: 0 0 3px 0; */
 }
 
 .widget .nest {
     display: flex;
     flex-direction: row;
-    margin: 3px 3px 0 0;
+    margin: 3px 3px 3px 0;
     gap: 3px;
+    max-width: 900px;
+    flex-wrap: wrap;
 }
 
 .widget.turn, .remove-x.turn {
@@ -76,6 +78,7 @@
     color: #718792;
     font-weight: 600;
     max-width: 150px;
+    margin: 0px;
 }
 
 

@@ -22,7 +22,8 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
-    padding: 3px 3px 0px 3px;
+    /* padding: 3px 3px 0px 3px; */
+    gap: 3px;
 }
 
 .frame .panels .list.row {
