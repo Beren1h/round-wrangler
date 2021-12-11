@@ -8,15 +8,21 @@
 @inject ControlHandler _control
 @inject CombatHandler _combat
 @inject AffectHandler _affect
+@inject TensionHandler _tension
 
 <div class="frame">
     <div class="panels">
-        
         <div class="list wide">
             <Forms />
         </div>
         <div class="list">
-            <div class="list">
+            <Widget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />             
+            @* <div class="list"> *@
                 <Widget 
                     Text=@HeaderMode().display
                     Reference=@HeaderMode().reference
@@ -47,25 +53,15 @@
                         }
                     </div>
                 </div>
-            </div>
+            @* </div> *@
         </div>
-
-        @* <div class="list wide debug0">
-        </div>
-   
-        <div class="list debug1">
-           
-            <div class="list">
-                 
-
-            </div>
-            <div class="list">
-
-            </div>
-
-        </div>
-        <div class="list other debug2">
-
+        @* <div class="list">
+            <Widget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />           
         </div> *@
     </div>
 </div>
@@ -82,7 +78,6 @@
             modes.bodyClick = () => {};
             modes.removeClick = () => {};
             modes.reference = "assignment";
-            //return $"Assigning {_bank.AffectBeingAssigned.Description}";
         }
         else
         {
@@ -90,7 +85,6 @@
             modes.bodyClick = () => _combat.NextRound();
             modes.removeClick = () => _combat.EndCombat();
             modes.reference = "round";
-            //return $"Round {_bank.Combat.Round.ToString()}";
         }
 
         return modes;

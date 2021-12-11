@@ -13,9 +13,5 @@ namespace wrangler.resources
             public const string YES = "yes";
             public const string NO = "no";
         }
-        // public static class MetaDataKeys 
-        // {
-        //     public const string CONCENTRATION = "concentration";
-        // }
     }
 }

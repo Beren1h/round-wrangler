@@ -56,6 +56,17 @@
         <button @onclick="AddAffect">Add Affect</button>
     </div>
 
+    <div class="control">
+
+    </div>
+    <div class="control">
+        <label class="label">combat exit reason</label>
+        <select @bind="_bank.InactiveReason">
+            <option value="@resources.Exits.DOWN" selected="selected">down</option>
+            <option value="@resources.Exits.FLED">fled</option>
+            <option value="@resources.Exits.UNKNOWN">unknown</option>
+        </select>
+    </div>
 </div>
 
 @code {

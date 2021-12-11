@@ -35,8 +35,6 @@ namespace wrangler.handlers
 
             foreach(var affect in _bank.Affects)
             {
-                //Console.WriteLine($"name: {affect.Description}, round: {affect.Expiration.Round} turn: {affect.Expiration.Turn}, pointer: {affect.Expiration.Pointer}");
-                //Console.WriteLine($"incoming: {incoming.Name}, current: {_bank.Combat.Turn}");
                 if (affect.Expiration.Round == _bank.Combat.Round &&
                     string.IsNullOrEmpty(affect.Expiration.Turn) &&
                     affect.Expiration.Pointer == resources.Affects.Pointers.START)
@@ -45,11 +43,9 @@ namespace wrangler.handlers
                     }
 
                 if (affect.Expiration.Round < _bank.Combat.Round)  
-                    // && string.IsNullOrEmpty(affect.Expiration.Turn) &&
-                    // affect.Expiration.Pointer == resources.Affects.Pointers.END)
-                    {
-                        list = Expire(list, affect);
-                    }
+                {
+                    list = Expire(list, affect);
+                }
             }
 
             _bank.Affects = list;            
@@ -61,8 +57,6 @@ namespace wrangler.handlers
 
             foreach(var affect in _bank.Affects)
             {
-                //Console.WriteLine($"name: {affect.Description}, round: {affect.Expiration.Round} turn: {affect.Expiration.Turn}, pointer: {affect.Expiration.Pointer}, concentration: {affect.IsConcentration}");
-                //Console.WriteLine($"incoming: {incoming.Name}, current: {_bank.Combat.Turn}, round: {_bank.Combat.Round}");
                 if (affect.Expiration.Round == _bank.Combat.Round &&
                     affect.Expiration.Turn == incoming.Name &&
                     affect.Expiration.Pointer == resources.Affects.Pointers.START)
@@ -121,7 +115,6 @@ namespace wrangler.handlers
 
         private void UpdateConcentration(Affect affect, bool adding)
         {
-            Console.WriteLine($"update concentration: adding:{adding}, affect:{affect.Description}");
             if (affect.IsConcentration == resources.Affects.Concentration.YES)
             {
                 var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
@@ -154,17 +147,6 @@ namespace wrangler.handlers
             }
 
             UpdateConcentration(affect, false);
-            // if (affect.IsConcentration == resources.Affects.Concentration.YES)
-            // {
-            //     var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
-
-            //     combatant.IsConcentrating = false;
-            // }
-
-            // if (OnCombatantChanged != null)
-            // {
-            //     OnCombatantChanged(this, new CombatantChangedEventArgs());
-            // }
 
             Notify();
         }

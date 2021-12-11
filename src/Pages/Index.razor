@@ -8,10 +8,18 @@
 @inject ControlHandler _control
 @inject CombatHandler _combat
 @inject AffectHandler _affect
+@inject TensionHandler _tension
 
 <div class="frame">
-    <div class="panel">
+    <div class="panels">
         <div class="list">
+            <Widget 
+                Text=@("Tension " + _bank.TensionDie)
+                Reference=@("tension")
+                DisplayOnly=@(true)
+                BodyClick="()=>{}"
+                RemoveClick="()=>{}"
+            />            
             <Widget 
                 Text=@("Round " + _bank.Combat.Round)
                 Reference=@("round")
@@ -30,6 +38,15 @@
                 />    
             }            
         </div>
+        @* <div class="list">
+            <Widget 
+                Text=@("Tension " + _bank.TensionDie)
+                Reference=@("tension")
+                DisplayOnly=@(true)
+                BodyClick="()=>{}"
+                RemoveClick="()=>{}"
+            />
+        </div>         *@
     </div>
 </div>
 
@@ -39,6 +56,7 @@
         _combatant.OnChange += Update;
         _combat.OnChange += Update;
         _affect.OnChange += Update;
+        _tension.OnChange += Update;
     }
 
     private void Update()

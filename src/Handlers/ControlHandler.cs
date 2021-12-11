@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components.Web;
@@ -54,7 +53,6 @@ namespace wrangler.handlers
             }
             else
             {
-                //_combat.SetTurn(combatant.Name);
                 _combat.SetTurn(combatant);
             }
         }
@@ -71,7 +69,6 @@ namespace wrangler.handlers
 
         public string DetermineConcentrationCssClass()
         {
-            //var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == _bank.Combat.Turn);
             var combatant = _bank.Combat.Turn;
 
             if (_bank.Combat.Round == 0 || combatant == null)
@@ -85,11 +82,6 @@ namespace wrangler.handlers
                 {
                     return "concentration";
                 }
-                // if (affect.MetaData.ContainsKey(resources.Affects.MetaDataKeys.CONCENTRATION) && 
-                //     affect.MetaData[resources.Affects.MetaDataKeys.CONCENTRATION] == combatant.Name)
-                // {
-                //     return "concentration";
-                // }
             }
 
             return string.Empty;
@@ -97,16 +89,6 @@ namespace wrangler.handlers
 
         public string DetermineCombatantWidgetCssClass(Combatant combatant)
         {
-            // if (!combatant.IsActive)
-            // {
-            //     return "not-active";
-            // }
-
-            // if (combatant.IsActive && (combatant.IsTurn || combatant.TurnTaken))
-            // {
-            //     return "turn-taken";
-            // }
-
             var css = string.Empty;
 
             if (!combatant.IsActive || combatant.IsTurn || combatant.TurnTaken)
@@ -120,11 +102,6 @@ namespace wrangler.handlers
             {
                 css += " concentration";
             }
-
-            // if (combatant.IsActive && combatant.IsTurn)
-            // {
-            //     css += " turn";
-            // }
 
             return css;
         }
