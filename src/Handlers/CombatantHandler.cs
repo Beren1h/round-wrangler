@@ -54,6 +54,7 @@ namespace wrangler.handlers
                 InactiveReason = resources.Exits.DOWN
             };
 
+            Console.WriteLine($"{combtant.Name}; {combtant.IsActive}; {combtant.InactiveReason} added");
             _bank.Combatants.Add(combtant);
 
             var sorted = _bank.Combatants.OrderBy(c => c.Name).ToList();
@@ -65,23 +66,9 @@ namespace wrangler.handlers
 
         public void RemoveCombatant(Combatant combatant)
         {
-            if (_bank.InactiveReason == resources.Exits.REMOVE)
-            {
-                var copy = new List<Combatant>(_bank.Combatants);
-                foreach(var clone in copy)
-                {
-                    Console.WriteLine($"{clone.Name}, active={clone.IsActive}, reason={clone.InactiveReason}");
-                    clone.IsTurn = false;
-                }
-                copy.Remove(combatant);
-                var sorted = copy.OrderBy(c => c.Name).ToList();
-                _bank.Combatants = sorted;
-            }
-            else
-            {
-                combatant.IsActive = !combatant.IsActive;
-                combatant.InactiveReason = _bank.InactiveReason;
-            }
+
+            combatant.IsActive = !combatant.IsActive;
+            combatant.InactiveReason = _bank.InactiveReason;
 
             if (OnCombatantChanged != null)
             {
