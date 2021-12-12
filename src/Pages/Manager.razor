@@ -1,0 +1,68 @@
+@page "/manager"
+
+@using wrangler.data
+@using wrangler.handlers
+
+@inject MemoryBank _bank
+@inject CombatantHandler _combatant
+@inject ControlHandler _control
+@inject CombatHandler _combat
+@inject AffectHandler _affect
+@inject TensionHandler _tension
+
+<div class="frame">
+    <div class="panel">
+        <Forms />
+    </div>
+    <div class="panel">
+            <Gadget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />        
+            <Gadget
+                Text=@($"Round {_bank.Combat.Round}")
+                Reference=@("round")
+                BodyClick="()=>_combat.NextRound()"
+                RemoveClick="()=>_combat.EndCombat()"
+            />
+        @foreach(var combatant in _bank.Combatants)
+        {
+            <Gadget
+                Text=@combatant.Name
+                Reference=@combatant
+                BodyClick="()=>_control.DetermineCombatantWidgetBodyClickAction(combatant)"
+                RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
+            />
+        }
+    </div>
+    <div class="panel">
+        @foreach(var affect in _bank.Affects)
+        {
+            <Gadget
+                Text=@affect.Description
+                Reference=@affect
+                BodyClick="()=>_affect.AssignAffect(affect)"
+                RemoveClick="()=>_affect.RemoveAffect(affect)"
+            />
+        }        
+    </div>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        _combatant.OnChange += Update;
+        _combat.OnChange += Update;
+        _affect.OnChange += Update;
+    }
+
+    private void Update()
+    {
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    } 
+}

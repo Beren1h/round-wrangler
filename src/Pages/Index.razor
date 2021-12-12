@@ -11,6 +11,29 @@
 @inject TensionHandler _tension
 
 <div class="frame">
+    <div class="panel">
+            <Gadget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                DisableClose=true
+            />        
+            <Gadget
+                Text=@($"Round {_bank.Combat.Round}")
+                Reference=@(new string("round"))
+                DisableClose=true
+            />        
+        @foreach(var combatant in _bank.Combatants)
+        {
+            <Gadget
+                Text=@combatant.Name
+                Reference=@combatant
+                DisableClose=true
+            />
+        }
+    </div>
+</div>
+
+@* <div class="frame">
     <div class="panels">
         <div class="list">
             <Widget 
@@ -47,8 +70,6 @@
                 RemoveClick="()=>{}"
             />
         </div>         *@
-    </div>
-</div>
 
 @code {
     protected override void OnInitialized()

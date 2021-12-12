@@ -38,6 +38,7 @@ namespace wrangler
             services.AddSingleton<CombatHandler>();
             services.AddSingleton<AffectHandler>();
             services.AddSingleton<TensionHandler>();
+            services.AddSingleton<WidgetThemeHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

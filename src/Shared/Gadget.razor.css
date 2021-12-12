@@ -1,0 +1,114 @@
+.widget {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 3px 3px 5px;
+    border-radius: 3px;
+    background-color: transparent;
+    user-select: none;
+}
+
+.widget .body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+    min-width: 200px;
+    max-width: 800px;
+    flex-wrap: wrap;
+    min-height: 25px;
+    cursor: pointer;
+}
+
+.widget .body .text {
+    margin: 0 3px 0 0;
+}
+
+.widget.image {
+    padding: 0 3px 0 0;
+    position: relative;
+}
+
+.widget.image .body span {
+    display: none;
+    position: absolute;
+    left: 15px;
+    top: -15px;
+    background-color: indigo;
+    border-radius: 3px;
+    color: lavender;
+    padding: 3px;
+}
+
+.widget.image:hover span{
+    display:block;
+}
+
+.widget .close {
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    padding: 0 0 2px 0;
+    display: flex;
+    /* font-weight: 600;
+    font-size: 12px; */
+    margin-left: auto;
+    cursor: pointer;
+}
+
+/* .widget .close.none {
+    display: none;
+} */
+
+/* .widget .close.green {
+    background-color: greenyellow;
+    border: 1px solid green;
+} */
+
+.widget.affect {
+    padding: 0 3px 0 3px;
+    background-color: #474747;
+}
+
+.widget.affect.assign {
+    padding: 0 3px 0 3px;
+    background-color: darkred;
+    color:darksalmon;
+}
+
+.widget.affect.applied .body, .widget.image .body {
+    min-width: 0;
+    gap: 3px;
+}
+
+.widget.combatant {
+    color: #8eacbb;
+}
+
+.widget.blue {
+    color: cyan;
+    background-color: blue;
+}
+
+.widget.combatant.turn {
+    background-color: #1faa00;
+    color: #9cff57;
+}
+
+.widget.combatant.inactive {
+    opacity: 0.15;
+}
+
+.filter-grey {
+    filter: invert(63%) sepia(24%) saturate(284%) hue-rotate(155deg) brightness(100%) contrast(93%);
+}
+
+.filter-green{
+    filter: invert(92%) sepia(8%) saturate(3069%) hue-rotate(38deg) brightness(101%) contrast(101%);
+}
+
+/* .filter-dark{
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+} */

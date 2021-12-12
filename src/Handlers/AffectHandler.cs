@@ -120,6 +120,7 @@ namespace wrangler.handlers
                 var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
 
                 combatant.IsConcentrating = adding;
+                combatant.ConcentrationAffect = adding ? affect : null;
             }
 
             if (OnCombatantChanged != null)
@@ -158,18 +159,6 @@ namespace wrangler.handlers
             var sort = _bank.Affects.OrderBy(a => a.Description).ToList();
 
             _bank.Affects = sort;
-
-            // if (affect.IsConcentration == resources.Affects.Concentration.YES)
-            // {
-            //     var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
-
-            //     combatant.IsConcentrating = true;
-            // }
-
-            // if (OnCombatantChanged != null)
-            // {
-            //     OnCombatantChanged(this, new CombatantChangedEventArgs());
-            // }
 
             UpdateConcentration(affect, true);
 

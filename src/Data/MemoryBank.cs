@@ -11,22 +11,6 @@ namespace wrangler.data
             Combat = new Combat();
             Combatants = new List<Combatant>();
             InactiveReason = resources.Exits.DOWN;
-
-            // var affect= new Affect { 
-            //     Description = "hold person",
-            //     Expiration = new Expiration {
-            //         Round = 9
-            //     },
-            // };
-
-            // var combatant = new Combatant {
-            //     Name = "Fred",
-            //     Affects = new List<Affect> {
-            //         affect
-            //     }
-            // };
-
-            //TensionDie = 4;
         }
 
         public Combat Combat { get; set; }
