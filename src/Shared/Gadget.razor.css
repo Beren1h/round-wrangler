@@ -6,6 +6,7 @@
     border-radius: 3px;
     background-color: transparent;
     user-select: none;
+    font-size: 20px;
 }
 
 .widget .body {

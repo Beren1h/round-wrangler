@@ -1,0 +1,99 @@
+@page "/dials"
+
+@using models
+@using wrangler.data
+@using wrangler.handlers
+
+@inject IJSRuntime _js
+@inject CombatantHandler _combatant
+@inject AffectHandler _affect
+@inject MemoryBank _bank
+
+<div class="dials">
+    <div class="box">
+        <div class="control">
+            <label class="label">add combatant</label>
+            <input type="text" @bind="Combatant" @onkeyup="@(e => AddCombatant(e))" @ref="CombatantInput" />
+        </div>
+    </div>
+    <div class="box">
+        <div class="control">
+            <label class="label">expiration round</label>
+            <input Id="@_id" @onfocusin="@FocusInHandler" type="text" @bind="Submit.Expiration.Round"
+                @ref="AffectStart" />
+        </div>
+        <div class="control">
+            <label class="label">expiration turn</label>
+            <select @bind="Submit.Expiration.Turn">
+                <option value="">---</option>
+                @foreach (var combatant in _bank.Combatants)
+                {
+                    <option value="@combatant.Name">@combatant.Name</option>
+                }
+            </select>
+        </div>
+        <div class="control">
+            <label class="label">expiration pointer</label>
+            <select @bind="Submit.Expiration.Pointer">
+                <option value="@resources.Affects.Pointers.END">@resources.Affects.Pointers.END</option>
+                <option value="@resources.Affects.Pointers.START">@resources.Affects.Pointers.START</option>
+            </select>
+        </div>
+        <div class="control">
+            <label class="label">concentration ?</label>
+            <select @bind="Submit.IsConcentration">
+                <option value="@resources.Affects.Concentration.NO">@resources.Affects.Concentration.NO</option>
+                <option value="@resources.Affects.Concentration.YES">@resources.Affects.Concentration.YES</option>
+            </select>
+        </div>
+        <div class="control">
+            <label class="label">description</label>
+            <input type="text" @bind="Submit.Description" @onkeyup="@(e => AddAffect(e))" @ref="CreateAffect" />
+        </div>        
+    </div>
+    <div class="box">
+        <div class="control">
+            <label class="label">icon</label>
+            <select @bind="_bank.InactiveReason">
+                <option value="@resources.Exits.DOWN" selected="selected">down</option>
+                <option value="@resources.Exits.FLED">fled</option>
+                <option value="@resources.Exits.UNKNOWN">unknown</option>
+            </select>
+        </div>        
+    </div>
+</div>
+
+@code {
+    Affect Submit = new Affect();
+    string Combatant = string.Empty;
+
+    private ElementReference CombatantInput;
+    private ElementReference CreateAffect;
+    private ElementReference AffectStart;
+    private string _id = "abc";
+
+    async Task FocusInHandler(FocusEventArgs e)
+    {
+        await _js.InvokeVoidAsync("selectText", _id);
+    }
+
+    public void AddCombatant(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            _combatant.AddCombatant(Combatant);
+            Combatant = string.Empty;
+        }
+    }
+
+    private void AddAffect(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            _affect.AddAffect(Submit);
+            Submit = new Affect();
+            Submit.Expiration.Round = _bank.Combat.Round;
+            AffectStart.FocusAsync();
+        }
+    }
+}
