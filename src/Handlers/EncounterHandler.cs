@@ -40,8 +40,6 @@ namespace wrangler.handlers
 
                 _bank.Encounters = upload.Encounters;
 
-                Console.WriteLine(upload.Session);
-
                 Notify();
             }
             catch(Exception ex)
