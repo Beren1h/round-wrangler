@@ -57,7 +57,8 @@
                 Text=@encounter.Name
                 Hovers=@encounter.Combatants
                 Reference=@encounter
-                BodyClick="()=>_encounter.CreateEncounter(encounter.Name)"
+                BodyClick="()=>_encounter.CreateEncounter(encounter)"
+                RemoveClick="()=>_encounter.RemoveEncounter(encounter)"
             />
         }         
     </div>

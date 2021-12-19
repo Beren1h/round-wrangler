@@ -11,6 +11,14 @@ namespace wrangler.handlers
 
     public class WidgetThemeHandler
     {
+        public WidgetCss GetClass(Encounter encounter)
+        {
+            return new WidgetCss {
+                Main =  "widget affect",
+                Close = "close"
+            };
+        }
+
         public WidgetCss GetClass(Affect affect, bool isChild)
         {
             if (affect.AssignmentMode && !isChild)
@@ -48,7 +56,7 @@ namespace wrangler.handlers
             {
                 return new WidgetCss{
                     Main = "widget combatant inactive",
-                    Image = "filter-grey",
+                    Image = "filter",
                     Close = "close"
                 };
             }
@@ -57,7 +65,7 @@ namespace wrangler.handlers
             {
                 return new WidgetCss{
                     Main = "widget combatant inactive",
-                    Image = "filter-grey",
+                    Image = "filter",
                     Close = "close"
                 };
             }
@@ -66,14 +74,14 @@ namespace wrangler.handlers
             {
                 return new WidgetCss{
                     Main = "widget combatant turn",
-                    Image = "filter-green",
+                    Image = "filter-turn",
                     Close = "close"
                 };
             }
 
             return new WidgetCss{
                 Main = "widget combatant",
-                Image = "filter-grey",
+                Image = "filter",
                 Close = "close"
             };
         }

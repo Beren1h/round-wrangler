@@ -38,7 +38,9 @@ namespace wrangler.handlers
 
                 var upload = JsonSerializer.Deserialize<FileUpload>(json, options);
 
-                _bank.Encounters = upload.Encounters;
+                var sort = upload.Encounters.OrderBy(a => a.Name).ToList();
+
+                _bank.Encounters = sort;
 
                 Notify();
             }
@@ -48,10 +50,19 @@ namespace wrangler.handlers
             }
         }
 
-        public void CreateEncounter(string name)
+        public void RemoveEncounter(Encounter encounter)
         {
-            var encounter = _bank.Encounters.FirstOrDefault(e => e.Name == name);
+            _bank.Encounters.Remove(encounter);
 
+            var sort = _bank.Encounters.OrderBy(a => a.Name).ToList();
+
+            _bank.Encounters = sort;
+
+            Notify();
+        }
+
+        public void CreateEncounter(Encounter encounter)
+        {
             foreach(var combatant in encounter.Combatants)
             {
                 _combatant.AddCombatant(combatant);

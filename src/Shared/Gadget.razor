@@ -78,6 +78,11 @@
 
     protected override void OnInitialized()
     {
+        if (Reference is Encounter)
+        {
+            _css = _themes.GetClass((Encounter)Reference);
+        }
+
         if (Reference is Combatant)
         {
             _combatant.OnCombatantChanged += UpdateCombatant;

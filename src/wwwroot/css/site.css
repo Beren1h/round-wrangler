@@ -26,18 +26,18 @@ body {
 
 .box .upload::before {
     content: 'upload encounters';
-    color:black;
+    color: #999999;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid #1a1a1a;
     padding: 3px 5px 3px 3px;
     font-size: 20px;
     display: inline-block;
     border-radius: 3px;
-    background: linear-gradient(0, #a5a5a5, #e3e3e3);
+    background: linear-gradient(0, #121212, #222222);
 }
 
 .box .upload:hover::before {
-    border-color:gold;
+    border-color:#999999;
 }
 
 /* 8888888888888888888888888888888888888888888888 */

@@ -37,20 +37,14 @@
     position: absolute;
     right: 3px;
     top: 3px;
-    background-color: indigo;
+    background-color: #999999;
     border-radius: 3px;
-    color: lavender;
+    color: #121212;
     padding: 0 3px 0 3px;
 }
 
 .widget .body:hover .hover{
-    display:flex;
-}
-
-.widget .body li {
-    padding: 0;
-    list-style: none;
-    list-style-type: none;
+    display: flex;
 }
 
 .widget.image .body span {
@@ -58,14 +52,14 @@
     position: absolute;
     left: 15px;
     top: -15px;
-    background-color: indigo;
+    background-color: #999999;
     border-radius: 3px;
-    color: lavender;
+    color: #121212;
     padding: 3px;
 }
 
 .widget.image:hover span{
-    display:block;
+    display: block;
 }
 
 .widget .close {
@@ -81,14 +75,25 @@
 }
 
 .widget.affect {
-    padding: 0 3px 0 3px;
-    background-color: #474747;
+    background-color: #222222;
+    color: #7c7c7c;
+}
+
+@keyframes alert{
+    0% { background-color: #004d40;}
+    25%	{ background-color: #00bfa5;}
+    50%	{ background-color: #004d40;}
+    75%	{ background-color: #00bfa5;}
+    100% { background-color: #004d40;}
 }
 
 .widget.affect.assign {
+    color: #121212;
+    animation: alert 2s infinite;    
+}
+
+.widget.affect.applied {
     padding: 0 3px 0 3px;
-    background-color: darkred;
-    color:darksalmon;
 }
 
 .widget.affect.applied .body, .widget.image .body {
@@ -97,34 +102,30 @@
 }
 
 .widget.combatant {
-    color: #8eacbb;
+    color: #999999;
 }
 
 .widget.blue {
-    color: cyan;
-    background-color: blue;
+    color: #121212;
+    background-color: #ff6f00;
 }
 
 .widget.combatant.turn {
-    background-color: #1faa00;
-    color: #9cff57;
+    background-color: #ffa040;
+    color: #c43e00;
 }
 
 .widget.combatant.inactive {
     opacity: 0.15;
 }
 
-.filter-grey {
-    filter: invert(63%) sepia(24%) saturate(284%) hue-rotate(155deg) brightness(100%) contrast(93%);
+.filter {
+    filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(207deg) brightness(87%) contrast(90%);
 }
 
-.filter-green{
-    filter: invert(92%) sepia(8%) saturate(3069%) hue-rotate(38deg) brightness(101%) contrast(101%);
+.filter-turn{
+    filter: invert(23%) sepia(95%) saturate(4358%) hue-rotate(26deg) brightness(97%) contrast(101%);
 }
-
-/* .filter-dark{
-    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
-} */
 
 .deleted {
     display: none;
