@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,13 +25,12 @@ namespace wrangler
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            // services.AddSingleton<wrangler.handlers.Memory>();
             services.AddSingleton<MemoryBank>();
             services.AddSingleton<CombatantHandler>();
-            services.AddSingleton<ControlHandler>();
             services.AddSingleton<CombatHandler>();
             services.AddSingleton<AffectHandler>();
             services.AddSingleton<TensionHandler>();
+            services.AddSingleton<EncounterHandler>();
             services.AddSingleton<WidgetThemeHandler>();
         }
 
@@ -73,3 +66,4 @@ namespace wrangler
         }
     }
 }
+

@@ -1,12 +1,13 @@
 @page "/manager"
 
+@using models
 @using wrangler.data
 @using wrangler.handlers
 
 @inject MemoryBank _bank
 @inject CombatantHandler _combatant
-@inject ControlHandler _control
 @inject CombatHandler _combat
+@inject EncounterHandler _encounter;
 @inject AffectHandler _affect
 @inject TensionHandler _tension
 
@@ -32,7 +33,7 @@
             <Gadget
                 Text=@combatant.Name
                 Reference=@combatant
-                BodyClick="()=>_control.DetermineCombatantWidgetBodyClickAction(combatant)"
+                BodyClick="()=>DetermineCombatantGadgetBodyClickAction(combatant)"
                 RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
             />
         }
@@ -48,15 +49,40 @@
             />
         }        
     </div>
+
+    <div class="panel">
+        @foreach(var encounter in _bank.Encounters)
+        {
+            <Gadget
+                Text=@encounter.Name
+                Hovers=@encounter.Combatants
+                Reference=@encounter
+                BodyClick="()=>_encounter.CreateEncounter(encounter.Name)"
+            />
+        }         
+    </div>
 </div>
 
 @code {
+
+    public void DetermineCombatantGadgetBodyClickAction(Combatant combatant)
+    {
+        if (_bank.AffectBeingAssigned != null)
+        {
+            _combatant.AddAffectWidget(combatant, _bank.AffectBeingAssigned);
+        }
+        else
+        {
+            _combat.SetTurn(combatant);
+        }
+    }
 
     protected override void OnInitialized()
     {
         _combatant.OnChange += Update;
         _combat.OnChange += Update;
         _affect.OnChange += Update;
+        _encounter.OnChange += Update;
     }
 
     private void Update()

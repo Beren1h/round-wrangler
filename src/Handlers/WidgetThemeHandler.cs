@@ -37,6 +37,13 @@ namespace wrangler.handlers
 
         public WidgetCss GetClass(Combatant combatant)
         {
+            if (combatant.IsDeleted)
+            {
+                return new WidgetCss{
+                    Main = "deleted"
+                };
+            }
+
             if (!combatant.IsActive)
             {
                 return new WidgetCss{

@@ -15,6 +15,15 @@
 <div class="@_css.Main">
     <div class="body" @onclick="() => InvokeClick(0)" @onclick:stopPropagation="true">
         <span class="text">@Text</span>
+        @if(Hovers != null && Hovers.Count > 0)
+        {
+            <div class="hover">
+                @foreach(var hover in Hovers)
+                {
+                    <div>@(hover)</div>
+                }
+            </div>
+        }
         @if(Reference is Combatant)
         {
             var combatant = (Combatant)Reference;
@@ -45,11 +54,14 @@
                     BodyClick="()=>_combatant.RemoveAffectWidget(combatant, affect)"
                 />
             }
-        }        
+        }
     </div>
     @if(!DisableClose)
     {
-        <div class="@_css.Close" @onclick="() => InvokeClick(1)">x</div>    
+        <div class="@_css.Close" 
+            tabindex="0"
+            @onclick="()=>InvokeClick(1)"
+            @onkeydown="(e)=>SetDeleteToggle(e)">x</div>
     }
 </div>
 
@@ -62,6 +74,7 @@
     [Parameter] public bool IsChild { get; set; }
     [Parameter] public Action BodyClick { get; set; }
     [Parameter] public Action RemoveClick { get; set; }
+    [Parameter] public List<string> Hovers { get; set; }
 
     protected override void OnInitialized()
     {
@@ -90,11 +103,6 @@
     {
         Text = $"Tension {e.Tension}";
     }
-@* 
-    private void Remove(object sender, AffectRemovedArgs e)
-    {
-        _affect.RemoveAffect(e.Affect);
-    } *@
 
     private void UpdateAffect(object sender, AssignmentAffectChangedEventArgs e)
     {
@@ -115,13 +123,21 @@
     private void UpdateCombatant(object sender, CombatantChangedEventArgs e)
     {
         var combatant = (Combatant)Reference;
-        
+
         if (!combatant.IsActive && combatant.ConcentrationAffect != null)
         {
             _affect.RemoveAffect(combatant.ConcentrationAffect);
         }
 
         _css = _themes.GetClass(combatant);
+    }
+
+    private void SetDeleteToggle(KeyboardEventArgs e)
+    {
+        if (e.CtrlKey)
+        {
+            _bank.DeleteToggle = true;
+        }
     }
 
     private void InvokeClick(int id)

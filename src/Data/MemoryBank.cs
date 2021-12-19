@@ -10,6 +10,7 @@ namespace wrangler.data
             Affects = new List<Affect>();
             Combat = new Combat();
             Combatants = new List<Combatant>();
+            Encounters = new List<Encounter>();
             InactiveReason = resources.Exits.DOWN;
         }
 
@@ -19,8 +20,12 @@ namespace wrangler.data
 
         public List<Affect> Affects { get; set; }
 
+        public List<Encounter> Encounters { get; set; }
+
         public int TensionDie { get; set; }
 
         public string InactiveReason { get; set; }
+
+        public bool DeleteToggle { get; set; }
     }
 }

@@ -65,10 +65,17 @@ namespace wrangler.handlers
 
         public void RemoveCombatant(Combatant combatant)
         {
-
-            combatant.IsActive = !combatant.IsActive;
-            combatant.InactiveReason = _bank.InactiveReason;
-            combatant.IsConcentrating = false;
+            if (_bank.DeleteToggle)
+            {
+                combatant.IsDeleted = true;
+                _bank.DeleteToggle = false;
+            }
+            else
+            {
+                combatant.IsActive = !combatant.IsActive;
+                combatant.InactiveReason = _bank.InactiveReason;
+                combatant.IsConcentrating = false;
+            }
 
             if (OnCombatantChanged != null)
             {

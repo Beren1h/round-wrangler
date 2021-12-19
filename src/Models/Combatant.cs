@@ -17,5 +17,6 @@ namespace wrangler.models
         public Affect ConcentrationAffect { get; set; }
         public string InactiveReason { get; set; }
         public List<Affect> Affects { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

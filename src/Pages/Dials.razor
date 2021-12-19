@@ -1,5 +1,7 @@
 @page "/dials"
 
+@using System.IO
+@using System.Text.Json
 @using models
 @using wrangler.data
 @using wrangler.handlers
@@ -8,6 +10,7 @@
 @inject CombatantHandler _combatant
 @inject AffectHandler _affect
 @inject MemoryBank _bank
+@inject EncounterHandler _encounter;
 
 <div class="dials">
     <div class="box">
@@ -59,7 +62,10 @@
                 <option value="@resources.Exits.FLED">fled</option>
                 <option value="@resources.Exits.UNKNOWN">unknown</option>
             </select>
-        </div>        
+        </div>
+    </div>
+    <div class="box">
+        <InputFile OnChange="@LoadFiles" class="upload" />
     </div>
 </div>
 
@@ -71,6 +77,11 @@
     private ElementReference CreateAffect;
     private ElementReference AffectStart;
     private string _id = "abc";
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        await _encounter.UploadEncounters(e.File);
+    }
 
     async Task FocusInHandler(FocusEventArgs e)
     {

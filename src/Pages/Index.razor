@@ -5,7 +5,6 @@
 
 @inject MemoryBank _bank
 @inject CombatantHandler _combatant
-@inject ControlHandler _control
 @inject CombatHandler _combat
 @inject AffectHandler _affect
 @inject TensionHandler _tension
@@ -32,44 +31,6 @@
         }
     </div>
 </div>
-
-@* <div class="frame">
-    <div class="panels">
-        <div class="list">
-            <Widget 
-                Text=@("Tension " + _bank.TensionDie)
-                Reference=@("tension")
-                DisplayOnly=@(true)
-                BodyClick="()=>{}"
-                RemoveClick="()=>{}"
-            />            
-            <Widget 
-                Text=@("Round " + _bank.Combat.Round)
-                Reference=@("round")
-                DisplayOnly=@(true)
-                BodyClick="()=>{}"
-                RemoveClick="()=>{}"
-            />
-            @foreach(var combatant in _bank.Combatants)
-            {
-                <Widget 
-                    Text=@combatant.Name
-                    DisplayOnly=@(true) 
-                    Reference=@combatant
-                    BodyClick="()=>{}"
-                    RemoveClick="()=>{}"
-                />    
-            }            
-        </div>
-        @* <div class="list">
-            <Widget 
-                Text=@("Tension " + _bank.TensionDie)
-                Reference=@("tension")
-                DisplayOnly=@(true)
-                BodyClick="()=>{}"
-                RemoveClick="()=>{}"
-            />
-        </div>         *@
 
 @code {
     protected override void OnInitialized()

@@ -20,6 +20,28 @@ body {
 
 /* ******************* end ********************* */
 
+.box .upload::file-selector-button {
+    visibility: hidden;
+  }
+
+.box .upload::before {
+    content: 'upload encounters';
+    color:black;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 3px 5px 3px 3px;
+    font-size: 20px;
+    display: inline-block;
+    border-radius: 3px;
+    background: linear-gradient(0, #a5a5a5, #e3e3e3);
+}
+
+.box .upload:hover::before {
+    border-color:gold;
+}
+
+/* 8888888888888888888888888888888888888888888888 */
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
