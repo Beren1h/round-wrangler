@@ -1,0 +1,132 @@
+.widget {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 3px 3px 5px;
+    border-radius: 3px;
+    background-color: transparent;
+    user-select: none;
+    font-size: 20px;
+}
+
+.widget .body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+    min-width: 200px;
+    max-width: 800px;
+    flex-wrap: wrap;
+    min-height: 25px;
+    cursor: pointer;
+}
+
+.widget .body .text {
+    margin: 0 3px 0 0;
+}
+
+.widget.image {
+    padding: 0 3px 0 0;
+    position: relative;
+}
+
+.widget .body .hover {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    background-color: #999999;
+    border-radius: 3px;
+    color: #121212;
+    padding: 0 3px 0 3px;
+}
+
+.widget .body:hover .hover{
+    display: flex;
+}
+
+.widget.image .body span {
+    display: none;
+    position: absolute;
+    left: 15px;
+    top: -15px;
+    background-color: #999999;
+    border-radius: 3px;
+    color: #121212;
+    padding: 3px;
+}
+
+.widget.image:hover span{
+    display: block;
+}
+
+.widget .close {
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    padding: 0 0 2px 0;
+    display: flex;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.widget.affect {
+    background-color: #222222;
+    color: #7c7c7c;
+}
+
+@keyframes alert{
+    0% { background-color: #004d40;}
+    25%	{ background-color: #00bfa5;}
+    50%	{ background-color: #004d40;}
+    75%	{ background-color: #00bfa5;}
+    100% { background-color: #004d40;}
+}
+
+.widget.affect.assign {
+    color: #121212;
+    animation: alert 2s infinite;    
+}
+
+.widget.affect.applied {
+    padding: 0 3px 0 3px;
+}
+
+.widget.affect.applied .body, .widget.image .body {
+    min-width: 0;
+    gap: 3px;
+}
+
+.widget.combatant {
+    color: #999999;
+}
+
+.widget.blue {
+    color: #121212;
+    background-color: #ff6f00;
+}
+
+.widget.combatant.turn {
+    background-color: #ffa040;
+    color: #c43e00;
+}
+
+.widget.combatant.inactive {
+    opacity: 0.15;
+}
+
+.filter {
+    filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(207deg) brightness(87%) contrast(90%);
+}
+
+.filter-turn{
+    filter: invert(23%) sepia(95%) saturate(4358%) hue-rotate(26deg) brightness(97%) contrast(101%);
+}
+
+.deleted {
+    display: none;
+}

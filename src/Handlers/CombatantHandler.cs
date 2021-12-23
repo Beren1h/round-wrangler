@@ -54,7 +54,6 @@ namespace wrangler.handlers
                 InactiveReason = resources.Exits.DOWN
             };
 
-            Console.WriteLine($"{combtant.Name}; {combtant.IsActive}; {combtant.InactiveReason} added");
             _bank.Combatants.Add(combtant);
 
             var sorted = _bank.Combatants.OrderBy(c => c.Name).ToList();
@@ -66,13 +65,23 @@ namespace wrangler.handlers
 
         public void RemoveCombatant(Combatant combatant)
         {
-
-            combatant.IsActive = !combatant.IsActive;
-            combatant.InactiveReason = _bank.InactiveReason;
+            if (_bank.DeleteToggle)
+            {
+                combatant.IsDeleted = true;
+                _bank.DeleteToggle = false;
+            }
+            else
+            {
+                combatant.IsActive = !combatant.IsActive;
+                combatant.InactiveReason = _bank.InactiveReason;
+                combatant.IsConcentrating = false;
+            }
 
             if (OnCombatantChanged != null)
             {
-                OnCombatantChanged(this, new CombatantChangedEventArgs());
+                OnCombatantChanged(this, new CombatantChangedEventArgs{
+                    Combatant = combatant
+                });
             }
 
             Notify();

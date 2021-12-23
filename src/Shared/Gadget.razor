@@ -1,0 +1,160 @@
+@page "/gadget"
+
+@using events
+@using models
+@using handlers
+@using data
+
+@inject WidgetThemeHandler _themes
+@inject CombatHandler _combat
+@inject CombatantHandler _combatant
+@inject AffectHandler _affect
+@inject TensionHandler _tension
+@inject MemoryBank _bank
+
+<div class="@_css.Main">
+    <div class="body" @onclick="() => InvokeClick(0)" @onclick:stopPropagation="true">
+        <span class="text">@Text</span>
+        @if(Hovers != null && Hovers.Count > 0)
+        {
+            <div class="hover">
+                @foreach(var hover in Hovers)
+                {
+                    <div>@(hover)</div>
+                }
+            </div>
+        }
+        @if(Reference is Combatant)
+        {
+            var combatant = (Combatant)Reference;
+            if(!combatant.IsActive)
+            {
+                <div class="widget image">
+                    <div class="body">
+                        <img src=@($"css/{combatant.InactiveReason}.svg") class="@_css.Image" />
+                    </div>
+                </div>                
+            }
+            if(combatant.IsConcentrating)
+            {
+                <div class="widget image">
+                    <div class="body">
+                        <img src="css/concentration.svg" class="@_css.Image" />
+                        <span>@combatant.ConcentrationAffect?.Description</span>
+                    </div>
+                </div>
+            }
+            foreach(var affect in combatant.Affects)
+            {
+                <Gadget
+                    Text=@affect.Description
+                    Reference=@affect
+                    IsChild=true
+                    DisableClose=true
+                    BodyClick="()=>_combatant.RemoveAffectWidget(combatant, affect)"
+                />
+            }
+        }
+    </div>
+    @if(!DisableClose)
+    {
+        <div class="@_css.Close" 
+            tabindex="0"
+            @onclick="()=>InvokeClick(1)"
+            @onkeydown="(e)=>SetDeleteToggle(e)">x</div>
+    }
+</div>
+
+@code {
+    private WidgetCss _css;
+
+    [Parameter] public string Text { get; set; }
+    [Parameter] public dynamic Reference { get; set; }
+    [Parameter] public bool DisableClose { get; set; }
+    [Parameter] public bool IsChild { get; set; }
+    [Parameter] public Action BodyClick { get; set; }
+    [Parameter] public Action RemoveClick { get; set; }
+    [Parameter] public List<string> Hovers { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Reference is Encounter)
+        {
+            _css = _themes.GetClass((Encounter)Reference);
+        }
+
+        if (Reference is Combatant)
+        {
+            _combatant.OnCombatantChanged += UpdateCombatant;
+            _combat.OnCombatantChanged += UpdateCombatant;
+            _affect.OnCombatantChanged += UpdateCombatant;
+            _css = _themes.GetClass((Combatant)Reference);
+        }
+
+        if (Reference is Affect)
+        {
+            _affect.OnAssignmentAffectChanged += UpdateAffect;
+            _css = _themes.GetClass((Affect)Reference, IsChild);
+        }
+
+        if (_css == null)
+        {
+            _tension.OnTensionChanged += UpdateTension;
+            _css = _themes.GetClass();
+        }
+    }
+
+    private void UpdateTension(object sender, TensionChangedEventArgs e)
+    {
+        Text = $"Tension {e.Tension}";
+    }
+
+    private void UpdateAffect(object sender, AssignmentAffectChangedEventArgs e)
+    {
+        var affect = (Affect)Reference;
+
+        if (e.Affect == null)
+        {
+            affect.AssignmentMode = false;
+        }
+
+        if (affect.Id == e.Affect?.Id)
+        {
+            affect.AssignmentMode = !affect.AssignmentMode;
+        }
+
+        _css = _themes.GetClass(affect, IsChild);
+    }
+    private void UpdateCombatant(object sender, CombatantChangedEventArgs e)
+    {
+        var combatant = (Combatant)Reference;
+
+        if (!combatant.IsActive && combatant.ConcentrationAffect != null)
+        {
+            _affect.RemoveAffect(combatant.ConcentrationAffect);
+        }
+
+        _css = _themes.GetClass(combatant);
+    }
+
+    private void SetDeleteToggle(KeyboardEventArgs e)
+    {
+        if (e.CtrlKey)
+        {
+            _bank.DeleteToggle = true;
+        }
+    }
+
+    private void InvokeClick(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                RemoveClick?.Invoke();
+            break;
+            default:
+                BodyClick?.Invoke();
+            break;
+        }
+    }    
+}

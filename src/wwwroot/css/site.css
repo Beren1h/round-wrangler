@@ -8,41 +8,39 @@ body {
 
 .frame {
     display: flex;
-    flex-direction: column;
-}
-
-.frame .panels {
-    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 50%;
 }
 
-.frame .panels .list {
+.frame .panel {
     display: flex;
     flex-direction: column;
-    flex: 1 0 auto;
-    /* padding: 3px 3px 0px 3px; */
     gap: 3px;
-}
-
-.frame .panels .list.row {
-    flex-direction: row;
-    padding: 3px 0 0 0;
-}
-
-.frame .panels .list.wide {
-    flex: 0 0 200px;
-    margin: 0 15px 0 0;
-}
-
-.frame .panels .list.nudge {
-    padding-top: 6px;
+    padding: 3px;
 }
 
 /* ******************* end ********************* */
 
+.box .upload::file-selector-button {
+    visibility: hidden;
+  }
 
+.box .upload::before {
+    content: 'upload encounters';
+    color: #999999;
+    cursor: pointer;
+    border: 1px solid #1a1a1a;
+    padding: 3px 5px 3px 3px;
+    font-size: 20px;
+    display: inline-block;
+    border-radius: 3px;
+    background: linear-gradient(0, #121212, #222222);
+}
+
+.box .upload:hover::before {
+    border-color:#999999;
+}
+
+/* 8888888888888888888888888888888888888888888888 */
 
 #blazor-error-ui {
     background: lightyellow;

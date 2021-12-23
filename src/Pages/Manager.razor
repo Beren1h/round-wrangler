@@ -1,0 +1,95 @@
+@page "/manager"
+
+@using models
+@using wrangler.data
+@using wrangler.handlers
+
+@inject MemoryBank _bank
+@inject CombatantHandler _combatant
+@inject CombatHandler _combat
+@inject EncounterHandler _encounter;
+@inject AffectHandler _affect
+@inject TensionHandler _tension
+
+<div class="frame">
+    <div class="panel">
+        <Dials />
+    </div>
+    <div class="panel">
+            <Gadget
+                Text=@($"Tension {_bank.TensionDie}")
+                Reference=@("tension")
+                BodyClick="()=>_tension.Add()"
+                RemoveClick="()=>_tension.Clear()"
+            />        
+            <Gadget
+                Text=@($"Round {_bank.Combat.Round}")
+                Reference=@("round")
+                BodyClick="()=>_combat.NextRound()"
+                RemoveClick="()=>_combat.EndCombat()"
+            />
+        @foreach(var combatant in _bank.Combatants)
+        {
+            <Gadget
+                Text=@combatant.Name
+                Reference=@combatant
+                BodyClick="()=>DetermineCombatantGadgetBodyClickAction(combatant)"
+                RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
+            />
+        }
+    </div>
+    <div class="panel">
+        @foreach(var affect in _bank.Affects)
+        {
+            <Gadget
+                Text=@affect.Description
+                Reference=@affect
+                BodyClick="()=>_affect.AssignAffect(affect)"
+                RemoveClick="()=>_affect.RemoveAffect(affect)"
+            />
+        }        
+    </div>
+
+    <div class="panel">
+        @foreach(var encounter in _bank.Encounters)
+        {
+            <Gadget
+                Text=@encounter.Name
+                Hovers=@encounter.Combatants
+                Reference=@encounter
+                BodyClick="()=>_encounter.CreateEncounter(encounter)"
+                RemoveClick="()=>_encounter.RemoveEncounter(encounter)"
+            />
+        }         
+    </div>
+</div>
+
+@code {
+
+    public void DetermineCombatantGadgetBodyClickAction(Combatant combatant)
+    {
+        if (_bank.AffectBeingAssigned != null)
+        {
+            _combatant.AddAffectWidget(combatant, _bank.AffectBeingAssigned);
+        }
+        else
+        {
+            _combat.SetTurn(combatant);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _combatant.OnChange += Update;
+        _combat.OnChange += Update;
+        _affect.OnChange += Update;
+        _encounter.OnChange += Update;
+    }
+
+    private void Update()
+    {
+        InvokeAsync(() => {
+            StateHasChanged();
+        });
+    } 
+}

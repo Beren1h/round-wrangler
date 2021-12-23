@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
 
 namespace wrangler.models
 {
-    // public class AffectSubmit : Affect
-    // {
-    //     public bool IsConcentration { get; set; }
-    // }
-
     public class Affect
     {
         private string _id;

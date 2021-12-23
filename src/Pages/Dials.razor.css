@@ -1,0 +1,30 @@
+.dials {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.control label {
+    color: #464646;
+    margin-top: 3px;
+}
+
+.control select, input{
+    border: none;
+    background-color: #121212;
+    border: 1px solid #222222;
+    color:#b6b6b6;
+    font-size: 20px;
+}
+
+.control select:focus, input:focus {
+    outline: none;
+    border: 1px solid #999999;
+    background-color: #242424;
+}
