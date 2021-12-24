@@ -1,6 +1,6 @@
 namespace wrangler.resources
 {
-    public static class Exits
+    public static class Icons
     {
         public const string DOWN = "skull";
         public const string FLED = "fled";
