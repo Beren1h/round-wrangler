@@ -1,3 +1,4 @@
+
 body {
     background-color: #121212;
 }
@@ -14,11 +15,15 @@ body {
     padding: 3px;
 }
 
-.box .upload::file-selector-button {
-    visibility: hidden;
-  }
+.box .upload {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
 
-.box .upload::before {
+.box .upload + label {
     content: 'upload encounters';
     color: #999999;
     cursor: pointer;
@@ -27,9 +32,13 @@ body {
     font-size: 20px;
     display: inline-block;
     border-radius: 3px;
-    background: linear-gradient(0, #121212, #222222);
+    background: linear-gradient(0, #121212, #222222);    
 }
 
-.box .upload:hover::before {
+.box .upload:focus + label {
+    border-color:#999999;
+}
+
+.box .upload:hover + label {
     border-color:#999999;
 }
