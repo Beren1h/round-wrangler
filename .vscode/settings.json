@@ -1,5 +1,0 @@
-{
-    "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
-    "appService.preDeployTask": "publish-release",
-    "appService.deploySubpath": "src/bin/Release/net5.0/publish"
-}
