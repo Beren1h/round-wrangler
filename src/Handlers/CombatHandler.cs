@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Options;
-using wrangler.configuration;
 using wrangler.data;
 using wrangler.events;
 using wrangler.models;
@@ -13,16 +11,13 @@ namespace wrangler.handlers
     {
         private readonly MemoryBank _bank;
         private readonly AffectHandler _affect;
-        private readonly Party _party;
         private readonly CombatantHandler _combatant;
 
         public CombatHandler(
             MemoryBank bank,
             AffectHandler affect,
-            IOptions<Party> options,
             CombatantHandler combatant
         ){
-            _party = options.Value;
             _bank = bank;
             _affect = affect;
             _combatant = combatant;
@@ -40,14 +35,6 @@ namespace wrangler.handlers
 
         public void NextRound()
         {
-            if (_bank.Combat.Round == 0)
-            {
-                foreach(var name in _party.Names)
-                {
-                    _combatant.AddCombatant(name);
-                }
-            }
-
             foreach(var combatant in _bank.Combatants.Where(c => c.IsActive))
             {
                 combatant.IsTurn = false;

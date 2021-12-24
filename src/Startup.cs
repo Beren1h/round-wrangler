@@ -21,17 +21,18 @@ namespace wrangler
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-             services.Configure<wrangler.configuration.Party>(Configuration.GetSection("Party"));
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<MemoryBank>();
-            services.AddSingleton<CombatantHandler>();
-            services.AddSingleton<CombatHandler>();
-            services.AddSingleton<AffectHandler>();
-            services.AddSingleton<TensionHandler>();
-            services.AddSingleton<EncounterHandler>();
-            services.AddSingleton<WidgetThemeHandler>();
+
+            services
+                .AddSingleton<MemoryBank>()
+                .AddSingleton<CombatantHandler>()
+                .AddSingleton<CombatHandler>()
+                .AddSingleton<AffectHandler>()
+                .AddSingleton<TensionHandler>()
+                .AddSingleton<EncounterHandler>()
+                .AddSingleton<WidgetThemeHandler>()
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
