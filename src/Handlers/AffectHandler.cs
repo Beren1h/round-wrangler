@@ -4,7 +4,6 @@ using System.Linq;
 using wrangler.data;
 using wrangler.events;
 using wrangler.models;
-using static wrangler.resources.Affects;
 
 namespace wrangler.handlers
 {
