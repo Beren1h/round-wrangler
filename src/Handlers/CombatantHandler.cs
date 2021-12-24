@@ -50,7 +50,7 @@ namespace wrangler.handlers
             var combtant = new Combatant {
                 Name = name,
                 IsActive = true,
-                InactiveReason = resources.Icons.DOWN
+                InactiveReason = resources.Icons.SKULL
             };
 
             _bank.Combatants.Add(combtant);

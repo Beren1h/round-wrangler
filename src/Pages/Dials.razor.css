@@ -1,7 +1,7 @@
 .dials {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
 }
 
 .control {
@@ -47,4 +47,30 @@
 
 .control input[type=text]::selection {
     background-color: #000000;
+}
+
+.control .icons {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.control .icons input[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.control .icons input[type=radio] + img {
+    cursor: pointer;
+    filter: invert(26%) sepia(0%) saturate(0%) hue-rotate(57deg) brightness(96%) contrast(88%);
+}
+
+.control .icons input[type=radio]:focus + img {
+    filter: invert(68%) sepia(0%) saturate(1293%) hue-rotate(143deg) brightness(90%) contrast(91%);    
+}
+
+.control .icons input[type=radio]:checked + img {
+    filter: invert(68%) sepia(0%) saturate(1293%) hue-rotate(143deg) brightness(90%) contrast(91%);
 }

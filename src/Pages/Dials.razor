@@ -26,7 +26,7 @@
         <div class="control">
             <label class="label">expiration turn</label>
             <select @bind="Submit.Expiration.Turn">
-                <option value="">---</option>
+                <option value=""> </option>
                 @foreach (var combatant in _bank.Combatants)
                 {
                     <option value="@combatant.Name">@combatant.Name</option>
@@ -48,12 +48,27 @@
     </div>
     <div class="box">
         <div class="control">
-            <label class="label">icon</label>
-            <select @bind="_bank.InactiveReason">
-                <option value="@resources.Icons.DOWN" selected="selected">down</option>
-                <option value="@resources.Icons.FLED">fled</option>
-                <option value="@resources.Icons.UNKNOWN">unknown</option>
-            </select>
+            <label>active icon</label>
+            <div class="icons">
+                <div>
+                    <input type="radio" name="icon" 
+                        checked="@(_bank.InactiveReason == @resources.Icons.SKULL)" 
+                        @onchange="@(()=>OnIconChange(resources.Icons.SKULL))" />
+                    <img src="css/skull.svg" />
+                </div>
+                <div>
+                    <input type="radio" name="icon"
+                        checked="@(_bank.InactiveReason == @resources.Icons.FLED)"
+                        @onchange="@(()=>OnIconChange(resources.Icons.FLED))" />
+                    <img src="css/fled.svg" />
+                </div>
+                <div>
+                    <input type="radio" name="icon"
+                        checked="@(_bank.InactiveReason == @resources.Icons.QUESTION)"
+                        @onchange="@(()=>OnIconChange(resources.Icons.QUESTION))" />
+                    <img src="css/question.svg" />
+                </div> 
+            </div>
         </div>
     </div>
     <div class="box">
@@ -65,6 +80,11 @@
 @code {
     Affect Submit = new Affect();
     string Combatant = string.Empty;
+
+    void OnIconChange(string icon)
+    {
+        _bank.InactiveReason = icon;
+    }
 
     private ElementReference CombatantInput;
     private ElementReference CreateAffect;

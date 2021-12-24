@@ -2,8 +2,8 @@ namespace wrangler.resources
 {
     public static class Icons
     {
-        public const string DOWN = "skull";
+        public const string SKULL = "skull";
         public const string FLED = "fled";
-        public const string UNKNOWN = "question";
+        public const string QUESTION = "question";
     }
 }
