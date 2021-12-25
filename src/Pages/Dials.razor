@@ -50,24 +50,15 @@
         <div class="control">
             <label>active icon</label>
             <div class="icons">
-                <div>
-                    <input type="radio" name="icon" 
-                        checked="@(_bank.InactiveReason == @resources.Icons.SKULL)" 
-                        @onchange="@(()=>OnIconChange(resources.Icons.SKULL))" />
-                    <img src="css/skull.svg" />
-                </div>
-                <div>
-                    <input type="radio" name="icon"
-                        checked="@(_bank.InactiveReason == @resources.Icons.FLED)"
-                        @onchange="@(()=>OnIconChange(resources.Icons.FLED))" />
-                    <img src="css/fled.svg" />
-                </div>
-                <div>
-                    <input type="radio" name="icon"
-                        checked="@(_bank.InactiveReason == @resources.Icons.QUESTION)"
-                        @onchange="@(()=>OnIconChange(resources.Icons.QUESTION))" />
-                    <img src="css/question.svg" />
-                </div> 
+                @foreach(var icon in resources.Icons.List)
+                {
+                    <div>
+                        <input type="radio" name="icon" 
+                            checked="@(_bank.InactiveReason == icon)" 
+                            @onchange="@(()=>OnIconChange(icon))" />
+                        <img src=@($"css/{icon}.svg") />
+                    </div>                    
+                }
             </div>
         </div>
     </div>
