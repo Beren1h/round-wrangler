@@ -52,12 +52,12 @@
             <div class="icons">
                 @foreach(var icon in resources.Icons.List)
                 {
-                    <div>
+                    <label>
                         <input type="radio" name="icon" 
                             checked="@(_bank.InactiveReason == icon)" 
                             @onchange="@(()=>OnIconChange(icon))" />
                         <img src=@($"css/{icon}.svg") />
-                    </div>                    
+                    </label>                        
                 }
             </div>
         </div>
