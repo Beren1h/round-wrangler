@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using wrangler.data;
 using wrangler.events;
@@ -51,7 +50,7 @@ namespace wrangler.handlers
             var combtant = new Combatant {
                 Name = name,
                 IsActive = true,
-                InactiveReason = resources.Exits.DOWN
+                InactiveReason = resources.Icons.SKULL
             };
 
             _bank.Combatants.Add(combtant);

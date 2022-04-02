@@ -1,46 +1,8 @@
+@import url('wrangler.css');
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
-body {
-    background-color: #111111;
-}
-
-.frame {
-    display: flex;
-    flex-direction: row;
-}
-
-.frame .panel {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 3px;
-}
-
-/* ******************* end ********************* */
-
-.box .upload::file-selector-button {
-    visibility: hidden;
-  }
-
-.box .upload::before {
-    content: 'upload encounters';
-    color: #999999;
-    cursor: pointer;
-    border: 1px solid #1a1a1a;
-    padding: 3px 5px 3px 3px;
-    font-size: 20px;
-    display: inline-block;
-    border-radius: 3px;
-    background: linear-gradient(0, #121212, #222222);
-}
-
-.box .upload:hover::before {
-    border-color:#999999;
-}
-
-/* 8888888888888888888888888888888888888888888888 */
 
 #blazor-error-ui {
     background: lightyellow;
@@ -54,12 +16,12 @@ body {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
 
 .debug0 {
     background-color: green;

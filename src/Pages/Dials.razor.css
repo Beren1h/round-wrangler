@@ -1,7 +1,7 @@
 .dials {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
 }
 
 .control {
@@ -23,8 +23,54 @@
     font-size: 20px;
 }
 
-.control select:focus, input:focus {
+.control input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+}
+
+.control input[type=checkbox]:focus {
+    filter: invert(12%) sepia(44%) saturate(3%) hue-rotate(47deg) brightness(93%) contrast(95%);
+}
+
+.control input[type=checkbox]:checked {
+    appearance: auto;
+    filter: invert(70%) sepia(0%) saturate(0%) hue-rotate(207deg) brightness(87%) contrast(90%);
+}
+
+.control select:focus, input[type=text]:focus {
     outline: none;
     border: 1px solid #999999;
     background-color: #242424;
+    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
+}
+
+.control input[type=text]::selection {
+    background-color: #000000;
+}
+
+.control .icons {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.control .icons input[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.control .icons input[type=radio] + img {
+    cursor: pointer;
+    filter: invert(26%) sepia(0%) saturate(0%) hue-rotate(57deg) brightness(96%) contrast(88%);
+}
+
+.control .icons input[type=radio]:focus + img {
+    filter: invert(68%) sepia(0%) saturate(1293%) hue-rotate(143deg) brightness(90%) contrast(91%);    
+}
+
+.control .icons input[type=radio]:checked + img {
+    filter: invert(68%) sepia(0%) saturate(1293%) hue-rotate(143deg) brightness(90%) contrast(91%);
 }

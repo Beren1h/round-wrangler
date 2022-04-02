@@ -11,7 +11,7 @@ namespace wrangler.data
             Combat = new Combat();
             Combatants = new List<Combatant>();
             Encounters = new List<Encounter>();
-            InactiveReason = resources.Exits.DOWN;
+            InactiveReason = resources.Icons.SKULL;
         }
 
         public Combat Combat { get; set; }

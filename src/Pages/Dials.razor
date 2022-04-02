@@ -1,7 +1,5 @@
 @page "/dials"
 
-@using System.IO
-@using System.Text.Json
 @using models
 @using wrangler.data
 @using wrangler.handlers
@@ -10,7 +8,7 @@
 @inject CombatantHandler _combatant
 @inject AffectHandler _affect
 @inject MemoryBank _bank
-@inject EncounterHandler _encounter;
+@inject EncounterHandler _encounter
 
 <div class="dials">
     <div class="box">
@@ -28,7 +26,7 @@
         <div class="control">
             <label class="label">expiration turn</label>
             <select @bind="Submit.Expiration.Turn">
-                <option value="">---</option>
+                <option value=""> </option>
                 @foreach (var combatant in _bank.Combatants)
                 {
                     <option value="@combatant.Name">@combatant.Name</option>
@@ -36,18 +34,12 @@
             </select>
         </div>
         <div class="control">
-            <label class="label">expiration pointer</label>
-            <select @bind="Submit.Expiration.Pointer">
-                <option value="@resources.Affects.Pointers.END">@resources.Affects.Pointers.END</option>
-                <option value="@resources.Affects.Pointers.START">@resources.Affects.Pointers.START</option>
-            </select>
-        </div>
+            <label class="label">expire at start?</label>
+            <input @bind="Submit.Expiration.AtStart" type="checkbox" />
+        </div>        
         <div class="control">
-            <label class="label">concentration ?</label>
-            <select @bind="Submit.IsConcentration">
-                <option value="@resources.Affects.Concentration.NO">@resources.Affects.Concentration.NO</option>
-                <option value="@resources.Affects.Concentration.YES">@resources.Affects.Concentration.YES</option>
-            </select>
+            <label class="label">concentration?</label>
+            <input @bind="Submit.IsConcentration" type="checkbox" name="concentration" />
         </div>
         <div class="control">
             <label class="label">description</label>
@@ -56,22 +48,34 @@
     </div>
     <div class="box">
         <div class="control">
-            <label class="label">icon</label>
-            <select @bind="_bank.InactiveReason">
-                <option value="@resources.Exits.DOWN" selected="selected">down</option>
-                <option value="@resources.Exits.FLED">fled</option>
-                <option value="@resources.Exits.UNKNOWN">unknown</option>
-            </select>
+            <label>active icon</label>
+            <div class="icons">
+                @foreach(var icon in resources.Icons.List)
+                {
+                    <label>
+                        <input type="radio" name="icon" 
+                            checked="@(_bank.InactiveReason == icon)" 
+                            @onchange="@(()=>OnIconChange(icon))" />
+                        <img src=@($"css/{icon}.svg") />
+                    </label>                        
+                }
+            </div>
         </div>
     </div>
     <div class="box">
-        <InputFile OnChange="@LoadFiles" class="upload" />
+        <InputFile OnChange="@LoadFiles" name="upload" id="upload" class="upload" />
+        <label for="upload">upload encounters</label>
     </div>
 </div>
 
 @code {
     Affect Submit = new Affect();
     string Combatant = string.Empty;
+
+    void OnIconChange(string icon)
+    {
+        _bank.InactiveReason = icon;
+    }
 
     private ElementReference CombatantInput;
     private ElementReference CreateAffect;

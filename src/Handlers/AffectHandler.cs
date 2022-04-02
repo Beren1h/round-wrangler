@@ -4,7 +4,6 @@ using System.Linq;
 using wrangler.data;
 using wrangler.events;
 using wrangler.models;
-using static wrangler.resources.Affects;
 
 namespace wrangler.handlers
 {
@@ -37,7 +36,8 @@ namespace wrangler.handlers
             {
                 if (affect.Expiration.Round == _bank.Combat.Round &&
                     string.IsNullOrEmpty(affect.Expiration.Turn) &&
-                    affect.Expiration.Pointer == resources.Affects.Pointers.START)
+                    affect.Expiration.AtStart
+                    )
                     {
                         list = Expire(list, affect);
                     }
@@ -59,15 +59,17 @@ namespace wrangler.handlers
             {
                 if (affect.Expiration.Round == _bank.Combat.Round &&
                     affect.Expiration.Turn == incoming.Name &&
-                    affect.Expiration.Pointer == resources.Affects.Pointers.START)
+                    affect.Expiration.AtStart
+                    )
                     {
                         list = Expire(list, affect);
                     }
 
                 if (affect.Expiration.Round < _bank.Combat.Round || (
                     affect.Expiration.Round == _bank.Combat.Round &&
-                    affect.Expiration.Turn == current?.Name &&
-                    affect.Expiration.Pointer == resources.Affects.Pointers.END))
+                    !string.IsNullOrEmpty(affect.Expiration.Turn) &&
+                    affect.Expiration.Turn == current?.Name
+                    ))
                     {
                         list = Expire(list, affect);
                     }
@@ -115,7 +117,8 @@ namespace wrangler.handlers
 
         private void UpdateConcentration(Affect affect, bool adding)
         {
-            if (affect.IsConcentration == resources.Affects.Concentration.YES)
+            if (affect.IsConcentration)
+            //if (affect.IsConcentration == resources.Affects.Concentration.YES)
             {
                 var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
 
