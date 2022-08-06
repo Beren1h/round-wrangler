@@ -13,7 +13,7 @@
 @inject MemoryBank _bank
 
 <div class="@_css.Main">
-    <div class="body" @onclick="() => InvokeClick(0)" @onclick:stopPropagation="true">
+    <div class="body" @onclick="(e) => InvokeClick(0, e)" @onclick:stopPropagation="true">
         <span class="text">@Text</span>
         @if(Hovers != null && Hovers.Count > 0)
         {
@@ -60,7 +60,7 @@
     {
         <div class="@_css.Close" 
             tabindex="0"
-            @onclick="()=>InvokeClick(1)"
+            @onclick="(e)=>InvokeClick(1, e)"
             @onkeydown="(e)=>SetDeleteToggle(e)">x</div>
     }
 </div>
@@ -73,6 +73,7 @@
     [Parameter] public bool DisableClose { get; set; }
     [Parameter] public bool IsChild { get; set; }
     [Parameter] public Action BodyClick { get; set; }
+    [Parameter] public Action ShiftBodyClick { get; set; }
     [Parameter] public Action RemoveClick { get; set; }
     [Parameter] public List<string> Hovers { get; set; }
 
@@ -145,7 +146,7 @@
         }
     }
 
-    private void InvokeClick(int id)
+    private void InvokeClick(int id, MouseEventArgs e)
     {
         switch (id)
         {
@@ -153,7 +154,14 @@
                 RemoveClick?.Invoke();
             break;
             default:
-                BodyClick?.Invoke();
+                if (e.ShiftKey)
+                {
+                    ShiftBodyClick?.Invoke();
+                }
+                else
+                {
+                    BodyClick?.Invoke();
+                }
             break;
         }
     }    

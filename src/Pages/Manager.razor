@@ -34,6 +34,7 @@
                 Text=@combatant.Name
                 Reference=@combatant
                 BodyClick="()=>DetermineCombatantGadgetBodyClickAction(combatant)"
+                ShiftBodyClick="()=>_combatant.ResetTurn(combatant)"
                 RemoveClick="()=>_combatant.RemoveCombatant(combatant)"
             />
         }
