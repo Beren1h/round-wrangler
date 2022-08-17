@@ -30,6 +30,7 @@ namespace wrangler.handlers
             _bank.Combat.Round = 0;
             _bank.Combat.Turn = null;
             _bank.Combatants = new List<Combatant>();
+            _bank.Affects = new List<Affect>();
             Notify();
         }
 

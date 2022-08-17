@@ -19,12 +19,11 @@
     </div>
     <div class="box">
         <div class="control">
-            <label class="label">expiration round</label>
-            <input Id="@_id" @onfocusin="@FocusInHandler" type="text" @bind="Submit.Expiration.Round"
-                @ref="AffectStart" />
-        </div>
+            <label class="label">description</label>
+            <input type="text" @bind="Submit.Description" @ref="AffectStart" />
+        </div>        
         <div class="control">
-            <label class="label">expiration turn</label>
+            <label class="label">owning combatant</label>
             <select @bind="Submit.Expiration.Turn">
                 <option value=""> </option>
                 @foreach (var combatant in _bank.Combatants)
@@ -34,7 +33,7 @@
             </select>
         </div>
         <div class="control">
-            <label class="label">expire at start?</label>
+            <label class="label">expires at start or turn?</label>
             <input @bind="Submit.Expiration.AtStart" type="checkbox" />
         </div>        
         <div class="control">
@@ -42,9 +41,9 @@
             <input @bind="Submit.IsConcentration" type="checkbox" name="concentration" />
         </div>
         <div class="control">
-            <label class="label">description</label>
-            <input type="text" @bind="Submit.Description" @onkeyup="@(e => AddAffect(e))" @ref="CreateAffect" />
-        </div>        
+            <label class="label">expiration round</label>
+            <input Id="@_id" @onfocusin="@FocusInHandler" type="text" @bind="Submit.Expiration.Round" @onkeyup="@(e => AddAffect(e))" @ref="CreateAffect"/>
+        </div>
     </div>
     <div class="box">
         <div class="control">

@@ -18,6 +18,23 @@ namespace wrangler.handlers
 
         public event EventHandler<CombatantChangedEventArgs> OnCombatantChanged;
 
+        public void ResetTurn(Combatant combatant)
+        {
+            if (combatant.IsActive && !combatant.IsTurn)
+            {
+                combatant.TurnTaken = false;
+                
+                if (OnCombatantChanged != null)
+                {
+                    OnCombatantChanged(this, new CombatantChangedEventArgs{
+                        Combatant = combatant
+                    });
+                }
+
+                Notify();
+            }
+        }
+
         public void RemoveAffectWidget(Combatant combatant, Affect affect)
         {
             combatant.Affects.Remove(affect);

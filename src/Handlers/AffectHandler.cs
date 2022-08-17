@@ -118,7 +118,6 @@ namespace wrangler.handlers
         private void UpdateConcentration(Affect affect, bool adding)
         {
             if (affect.IsConcentration)
-            //if (affect.IsConcentration == resources.Affects.Concentration.YES)
             {
                 var combatant = _bank.Combatants.FirstOrDefault(c => c.Name == affect.Expiration.Turn);
 
