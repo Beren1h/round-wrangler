@@ -17,6 +17,23 @@ namespace wrangler.handlers
         }
 
         public event EventHandler<CombatantChangedEventArgs> OnCombatantChanged;
+        public event EventHandler<CombatantsChangedEventArgs> OnCombatantsChanged;
+
+        public void RemoveInactives()
+        {
+            var list = _bank.Combatants.Where(c => c.IsActive);
+
+            _bank.Combatants = list.OrderBy(c => c.Name).ToList();
+
+            if (OnCombatantsChanged != null)
+            {
+                OnCombatantsChanged(this, new CombatantsChangedEventArgs{
+                    Combatants = _bank.Combatants
+                });
+            }
+
+            Notify();            
+        }
 
         public void ResetTurn(Combatant combatant)
         {

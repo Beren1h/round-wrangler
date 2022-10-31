@@ -86,6 +86,7 @@
 
         if (Reference is Combatant)
         {
+            _combatant.OnCombatantsChanged += UpdateCombatants;
             _combatant.OnCombatantChanged += UpdateCombatant;
             _combat.OnCombatantChanged += UpdateCombatant;
             _affect.OnCombatantChanged += UpdateCombatant;
@@ -126,6 +127,15 @@
 
         _css = _themes.GetClass(affect, IsChild);
     }
+
+    private void UpdateCombatants(object sender, CombatantsChangedEventArgs e)
+    {
+        foreach(var combatant in e.Combatants)
+        {
+            _css = _themes.GetClass(combatant);
+        }
+    }
+
     private void UpdateCombatant(object sender, CombatantChangedEventArgs e)
     {
         var combatant = (Combatant)Reference;

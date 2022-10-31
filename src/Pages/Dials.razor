@@ -65,6 +65,9 @@
         <InputFile OnChange="@LoadFiles" name="upload" id="upload" class="upload" />
         <label for="upload">upload encounters</label>
     </div>
+    <div class="box">
+        <button type="button" name="compress" id="compress" @onclick="@(() => _combatant.RemoveInactives())">compress</button>
+    </div>
 </div>
 
 @code {
